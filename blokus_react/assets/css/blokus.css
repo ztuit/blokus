@@ -1,0 +1,78 @@
+
+
+body{
+  padding-left: 20px;
+}
+.gameTable {
+
+
+
+}
+
+
+.board{
+
+
+}
+
+
+.board__row{
+
+  height: 30px !important;
+
+}
+
+.board__cell{
+  border: 1px solid white;
+  max-width: 30px !important;
+  height: 30px !important;
+  background-color: grey;
+}
+
+.board__cell--blue{
+  background-color: blue;
+}
+
+.board__cell--green{
+  background-color: green;
+}
+
+.board__cell--red{
+  background-color: red;
+}
+
+.board__cell--yellow{
+  background-color: yellow;
+}
+
+.hide{
+  display: none;
+}
+
+.board__cell--transparent{
+/* Netscape */
+-moz-opacity: 0.0;
+
+/* Safari 1.x */
+-khtml-opacity: 0.0;
+
+/* Good browsers */
+opacity: 0.0;
+}
+
+.placeable{
+  cursor: move;
+  float: left;
+}
+
+.selectedShape{
+  border: 1px solid red;
+}
+
+.srow{
+  display: table;
+}
+
+.highlightCell{
+    background-color: orange;
+}

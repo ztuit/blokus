@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="../../node_modules/react/dist/react.js"></script>
+  <script src="../../node_modules/react-dom/dist/react-dom.js"></script>
+  <script src="../../node_modules/jquery/dist/jquery.js"></script>
+  <link href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/css/blokus.css" rel="stylesheet"/>
+  <script src="../js/main.js"></script>
+  <script src="../../node_modules/babel-core/browser.min.js"></script>
+    </head>
+
+
+  <meta charset="utf-8">
+  <title>React JS Example</title>
+</head>
+<body>
+  <div id="example"/>
+  <script type="text/babel">
+
+ $(document).ready(function(){
+
+        ReactDOM.render(
+        <BlokusApp />,
+        document.getElementById('example')
+        );
+  });
+
+
+    </script>
+</body>
+</html>

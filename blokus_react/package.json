@@ -1,0 +1,29 @@
+{
+  "name": "blokus_react",
+  "version": "1.0.0",
+  "description": "A react front end for blokus",
+  "main": "index.js",
+  "devDependencies":{
+    "jasmine":"2.4.1",
+    "jasmine-node": "^1.14.5",
+    "http-server" : "0.9.0",
+    "jquery": "2.2.4",
+    "react": "15.1.0",
+    "react-dom": "15.1.0",
+    "browserify": "13.0.1",
+    "babel-core": "6.9.0",
+    "reactify": "1.1.1",
+    "bootstrap": "3.3.6",
+    "classnames": "2.2.5"
+  },
+  "scripts": {
+    "test": "jasmine-node spec",
+    "start": "http-server -a localhost -p 8000",
+    "build:js": "browserify -t reactify ./src/js/main.js -o ./dist/js/main.js",
+    "build:html": "cp ./src/view/index.html ./dist/view/main.html",
+    "build:dist": "rm -Rf ./dist && mkdir -p ./dist/js && mkdir -p ./dist/view && npm run build:js && npm run build:html &&  npm run build:css",
+    "build:css": "cp -R ./assets ./dist/assets"
+  },
+  "author": "Stu",
+  "license": "ISC"
+}
