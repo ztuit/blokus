@@ -92,6 +92,7 @@ Shape.prototype = {
 	}
 };
 
-
-window.Shape = Shape;
+if(typeof window !== 'undefined'){
+	window.Shape = Shape;
+}
 module.exports = Shape;

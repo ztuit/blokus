@@ -43,7 +43,8 @@
 
   };
 
-
+if(typeof window !== 'undefined'){
   window.Coordinate=Coordinate;
+}
 
   module.exports=Coordinate;

@@ -47,7 +47,8 @@ ShapeFactory.prototype = {
   }
 };
 
-
-window.ShapeFactory = ShapeFactory;
+if(typeof window !== 'undefined'){
+  window.ShapeFactory = ShapeFactory;
+}
 
 module.exports = ShapeFactory;

@@ -114,4 +114,6 @@ Board.prototype = {
 
 
 module.exports = Board;
-window.Board = Board;
+if(typeof window !== 'undefined'){
+	window.Board = Board;
+}
