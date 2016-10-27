@@ -33,6 +33,19 @@ describe("Coordinate Test", function() {
       expect(coord.equals(new Coordinate(1,2))).toBeTruthy();
     });
 
+    it("Can detect if touches corners", function(){
+      var coord = new Coordinate(0,0);
+      expect(coord.corners(new Coordinate(-1,0))).toBeFalsy();
+      expect(coord.corners(new Coordinate(-1,1))).toBeTruthy();
+      expect(coord.corners(new Coordinate(0,1))).toBeFalsy();
+      expect(coord.corners(new Coordinate(1,1))).toBeTruthy();
+      expect(coord.corners(new Coordinate(1,0))).toBeFalsy();
+      expect(coord.corners(new Coordinate(1,-1))).toBeTruthy();
+      expect(coord.corners(new Coordinate(0,-1))).toBeFalsy();
+      expect(coord.corners(new Coordinate(-1,-1))).toBeTruthy();
+      expect(coord.corners(new Coordinate(2,-7))).toBeFalsy();
+    });
+
   });
 
 

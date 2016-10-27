@@ -36,12 +36,16 @@ Shape.prototype = {
 		});
 		return new Shape(this.colour, newShapeMap, this.position);
 	},
+	/**
+	 * This is more than just intersects, it
+	 * also checks if the shape borders.
+	 **/
 	intersects : function(other){
 		var otherCoords = other.getCoordinates();
 		var doesIntersects=false;
 		this.getCoordinates().forEach(function(c){
 				if(otherCoords.find(function(e){
-					return c.equals(e) || c.borders(e);
+					return c.equals(e);
 				})){
 					doesIntersects=true;
 					return true;
@@ -49,6 +53,43 @@ Shape.prototype = {
 		});
 		return doesIntersects;
 	},
+	/**
+	 * Sees if this shape shares a border with the other shape.
+	 **/
+	borders : function(other){
+		var otherCoords = other.getCoordinates();
+		var doesIntersects=false;
+		this.getCoordinates().forEach(function(c){
+				if(otherCoords.find(function(e){
+					return c.borders(e);
+				})){
+					doesIntersects=true;
+					return true;
+				}
+		});
+		return doesIntersects;
+	},
+	/**
+	 * Returns true if the given
+	 * coordinate touches a corner.
+	 **/
+	 touchesCorner : function(otherShape){
+		 var otherCoords = otherShape.getCoordinates();
+ 		var doesIntersects=false;
+ 		this.getCoordinates().forEach(function(c){
+ 				if(otherCoords.find(function(e){
+ 					return c.corners(e);
+ 				})){
+ 					doesIntersects=true;
+ 					return true;
+ 				}
+ 		});
+ 		return doesIntersects;
+	 },
+	/**
+	 * Return true if the coordinate
+	 * is contained within the shape.
+	 **/
 	containsPoint : function(coord){
 
 		return this.getCoordinates().find(function(c){

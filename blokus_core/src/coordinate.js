@@ -34,12 +34,22 @@
     equals : function(other){
       return this.x===other.x && this.y===other.y && other.z===this.z;
     },
-
+    /**
+     * Return true if the coordinates share
+     * a value on any axis.
+     **/
     borders : function(other){
       //TODO: Add Z check
       return (Math.abs(this.x-other.x)===1 && (this.y===other.y)) ||
              (Math.abs(this.y-other.y)===1 && (this.x===other.x));
-    }
+    },
+    /**
+     * Returns true if the coordinates are offSet
+     * by 1 in any dimension.
+     **/
+     corners : function(other){
+       return Math.abs(this.x-other.x)===1 && Math.abs(this.y-other.y)===1;
+     }
 
   };
 
