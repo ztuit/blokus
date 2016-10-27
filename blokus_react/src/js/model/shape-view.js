@@ -49,7 +49,7 @@ var ShapeView = React.createClass({
       return (
         <div  tabindex="0" style={divStyle} draggable="true"  onDragStart={this._dragStarted} className={compClassNames}>
           {rows}
-        <input id="a" onKeyPress={this._keyPress} />
+        
         </div>
       );
     }

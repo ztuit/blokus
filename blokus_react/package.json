@@ -13,6 +13,7 @@
     "browserify": "13.1.1",
     "babelify": "7.3.0",
     "babel-core": "6.9.0",
+    "babel-preset-react": "6.16.0",
     "reactify": "1.1.1",
     "bootstrap": "3.3.6",
     "classnames": "2.2.5"
@@ -20,7 +21,7 @@
   "scripts": {
     "test": "jasmine-node spec",
     "start": "http-server -a localhost -p 8000",
-    "build:js": "browserify -t [ babelify --presets [ es2015 react ]] ./src/js/main.js -o ./dist/js/main.js",
+    "build:js": "browserify -t [ babelify --presets [ react ] ] ./src/js/main.js -o ./dist/js/main.js",
     "build:html": "cp ./src/view/index.html ./dist/view/main.html",
     "build:dist": "rm -Rf ./dist && mkdir -p ./dist/js && mkdir -p ./dist/view && npm run build:js && npm run build:html &&  npm run build:css",
     "build:css": "cp -R ./assets ./dist/assets"
