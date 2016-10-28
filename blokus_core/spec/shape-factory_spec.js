@@ -22,11 +22,18 @@ describe("Shape Factory Test", function() {
       }.bind(this));
     });
 
-    it("print t shape ", function() {
+
+
+    it("print shapes ", function() {
       var shapeFactory = new ShapeFactory();
       var ss = shapeFactory.buildShapeSet('blue');
-      console.log(" t tile");
-      console.log(ss.get(shapeFactory.tileIndex.ttile).toString());
+      console.log(" shapes...");
+      for (var property in shapeFactory.tileIndex) {
+        if (shapeFactory.tileIndex.hasOwnProperty(property)) {
+            console.log("SHAPE " + property);
+            console.log(ss.get(shapeFactory.tileIndex[property]).toString());
+        }
+      }
     });
 
 

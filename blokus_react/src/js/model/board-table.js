@@ -19,6 +19,9 @@ var BoardTable = React.createClass({
         el.shapePlayed(s);
       }.bind(this));
     },
+    _rotateRight : function(s){
+
+    },
     _trayMounted : function(tray){
       this.state.trays.push(tray);
     },
@@ -28,7 +31,7 @@ var BoardTable = React.createClass({
     render: function() {
       return (
       <div className="gameTable">
-        <RBoard shapeDropped={this._shapeDropped} playedShape={this.state.playedShape} width="10" height="10"/>
+        <RBoard shapeDropped={this._shapeDropped} playedShape={this.state.playedShape} width="20" height="20"/>
         <PlayerTray ref={this._trayMounted} shapeDragged={this._shapeDragged} shapeDragEnd={this._shapeDragEnd} pid="0" currentTurn={this.props.currentTurn} colour="blue" endTurnHandler={this.props.endTurnHandler}/>
         <PlayerTray ref={this._trayMounted} shapeDragged={this._shapeDragged} shapeDragEnd={this._shapeDragEnd} pid="1" currentTurn={this.props.currentTurn} colour="red" endTurnHandler={this.props.endTurnHandler}/>
         <PlayerTray ref={this._trayMounted} shapeDragged={this._shapeDragged} shapeDragEnd={this._shapeDragEnd} pid="2" currentTurn={this.props.currentTurn} colour="green" endTurnHandler={this.props.endTurnHandler}/>

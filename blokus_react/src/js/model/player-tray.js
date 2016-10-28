@@ -17,25 +17,37 @@ var PlayerTray = React.createClass({
     _createClickHandler : function(){
       return this.props.endTurnHandler;
     },
-    shapePlayed : function(shape){
 
-      var newShape = shape.normalise();
-      var newShapes = this.state.shapes.filter(function(el){
-
-        return !el.equals(newShape);
-      }.bind(this));
-
-
-      this.setState({shapes:newShapes});
-
-    },
-    _keyDown : function(){
-      console.log("tray key down");
+    _keyDown : function(id){
+      console.log("tray key down " + id);
     },
     _selected : function(id){
       this.setState({selected:id});
     },
+    /**
+     * The shape has been played so
+     * remove from the tray set.
+     **/
+    shapePlayed : function(shape){
+      var newShape = shape.normalise();
+      var newShapes = this.state.shapes.filter(function(el){
+        return !el.equals(newShape);
+      }.bind(this));
+      this.setState({shapes:newShapes});
+    },
+    /**
+     * The shape needs to be rotated
+     * which is a change to the current shape
+     * and replace.
+     **/
+    _rotateShapeRight : function(shape){
 
+      var newShape = shape.rotateRight90().normalise();
+      var newShapes = this.state.shapes.replace(function(el){
+        return el.equals(shape);
+      }.bind(this), newShape);
+      this.setState({shapes:newShapes});
+    },
     render: function() {
       var cellClassNames = "";
       if(this.state.pid!==this.props.currentTurn){
@@ -47,12 +59,12 @@ var PlayerTray = React.createClass({
 
       this.state.shapes.forEach(function(el){
 
-        shapesEl.push(<ShapeView shapeSelected={this._selected} currentSelected={this.state.selected} shapeDragged={this.props.shapeDragged} shapeDragEnd={this.props.shapeDragEnd} shapeId={cnter} key={cnter} shape={el}/>);
+        shapesEl.push(<ShapeView  rotateRight={this._rotateShapeRight} shapeSelected={this._selected} currentSelected={this.state.selected} shapeDragged={this.props.shapeDragged} shapeDragEnd={this.props.shapeDragEnd} shapeId={cnter} key={cnter} shape={el}/>);
         cnter+=1;
       }.bind(this));
       var key = "tray_" + this.props.colour;
       return (
-      <div  tabindex="0" className={cellClassNames}  onKeyDown={this._keyDown}>
+      <div  tabindex="0" className={cellClassNames}  >
         {this.props.colour} has pieces to play:
         <div>
           {shapesEl}

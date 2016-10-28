@@ -9,8 +9,8 @@ var Shape = function(colour, shapeMap, position){
 	this.width=0;
 	this.height=0;
 	this.getCoordinates().forEach(function(el){
-		this.width=Math.max(el.x+1,this.width);
-		this.height=Math.max(el.y+1, this.height);
+		this.width=Math.max(Math.abs(el.x)+1,this.width);
+		this.height=Math.max(Math.abs(el.y)+1, this.height);
 	}.bind(this));
 };
 
@@ -123,9 +123,15 @@ Shape.prototype = {
 	 * Move the shape to the origin
 	 **/
 	normalise : function(){
+		//Find the point furthest from the origin
+		var distanceTallyX = 1000;
+		var distanceTallyY = 1000;
 		var coords = this.shapeMap;
-		var lastCoord = coords.get(coords.length-1);
-		var offSet = new Coordinate(-parseInt(lastCoord.x), -parseInt(lastCoord.y));
+		coords.forEach(function(c){
+			distanceTallyY = Math.min(distanceTallyY, c.y);
+			distanceTallyX = Math.min(distanceTallyX, c.x);
+		}.bind(this));
+		var offSet = new Coordinate(-parseInt(distanceTallyX), -parseInt(distanceTallyY));
 		var newShapeMap = coords.map(function(el){
 				return el.add(offSet);
 		}.bind(this));

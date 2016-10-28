@@ -24,6 +24,7 @@ ConsList.prototype = {
     return index===currentIndex ? item.head : this._get(item.tail, index, currentIndex+1);
   },
 
+
   /**
    * higher order map function
    **/
@@ -84,6 +85,16 @@ ConsList.prototype = {
      }
 
    },
+
+   /**
+    * Replace an item.
+    **/
+    replace : function(cmpF, n){
+      return this._replace(cmpF,n,this);
+    },
+    _replace : function(cmpF,n,l){
+      return l===Nil ? l : (cmpF(l.head)===true) ? l.tail.Cons(n) : this._replace(cmpF,n,l.tail).Cons(l.head);
+    },
 
    /**
     * Equals

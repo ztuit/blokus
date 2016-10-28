@@ -10,7 +10,6 @@ var ShapeView = React.createClass({
       return null;
     },
     componentDidMount: function() {
-      $('#divy1').bind('keydown', function(){console.log("vvvvvv");});
     },
     _dragStarted: function(e){
       var key = document.elementFromPoint(e.clientX, e.clientY).id.split(",");
@@ -28,28 +27,36 @@ var ShapeView = React.createClass({
       this.props.shapeSelected(this.props.shapeId);
     },
     _keyPress : function(e){
-      console.log("Key press");
       e.preventDefault();
       e.stopPropagation();
     },
+    _rotate : function(e){
+      if(e.shiftKey){
+        this.props.rotateRight(this.props.shape);
+      }
+    },
     render: function() {
       var rows= [];
-      for (var i = this.props.shape.height; i >=0 ; i--) {
+      var width = this.props.shape.width;
+      var height = this.props.shape.height;
+      console.log("new shape ");
+      for (var i = height; i >=0 ; i--) {
         var cols = [];
-        for (var j = 0; j < this.props.shape.width; j++) {
+        for (var j = 0; j < width ; j++) {
           var shp = this.props.shape.containsPoint(new Coordinate(j,i));
           var fillVal = shp ? this.props.shape.colour : 'transparent';
           var cellClassNames = cx("col-sm-4", "board__cell", "board__cell--" + fillVal);
-          cols.push(<div onClick={this._onClick} className={cellClassNames} id={j+","+i} key={j+","+i}>&nbsp;</div>);
+          console.log("adding " + j + " " + i);
+          cols.push(<div  onClick={this._onClick} className={cellClassNames} id={j+","+i} key={j+","+i}>&nbsp;</div>);
         }
         rows.push(<div className="srow" key={i}>{cols}</div>);
       }
       var compClassNames = cx("placeable", {"selectedShape":this.props.currentSelected===this.props.shapeId});
       var divStyle = {width: (this.props.shape.width*32)+5};
       return (
-        <div  tabindex="0" style={divStyle} draggable="true"  onDragStart={this._dragStarted} className={compClassNames}>
+        <div onKeyPress={this._keyPress} onClick={this._rotate} tabindex="0" style={divStyle} draggable="true"  onDragStart={this._dragStarted} className={compClassNames}>
           {rows}
-        
+
         </div>
       );
     }

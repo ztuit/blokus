@@ -32,6 +32,32 @@ describe("Cons Test", function() {
       expect(list.get(1)).toBe('b1');
     });
 
+    describe("Can replace items in list", function(){
+      it("List is unchanged", function(){
+        var list = new ConsList.list('a');
+        list = list.Cons('b');
+        list = list.Cons('c');
+        list = list.replace(function(e){
+          return e==='z';
+        }, 'z');
+        expect(list.get(2)).toBe('a');
+        expect(list.get(1)).toBe('b');
+        expect(list.get(0)).toBe('c');
+      });
+
+      it("List item is replaced", function(){
+        var list = new ConsList.list('a');
+        list = list.Cons('b');
+        list = list.Cons('c');
+        list = list.replace(function(e){
+          return e==='a';
+        }, 'z');
+        expect(list.get(2)).toBe('z');
+        expect(list.get(1)).toBe('b');
+        expect(list.get(0)).toBe('c');
+      });
+    });
+
   });
 
 
