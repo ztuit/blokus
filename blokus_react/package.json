@@ -10,14 +10,15 @@
     "jasmine":"2.4.1",
     "jasmine-node": "^1.14.5",
     "http-server" : "0.9.0",
+    "babelify": "7.3.0",
+    "reactify": "1.1.1"
+  },
+  "dependencies":{
     "jquery": "2.2.4",
     "react": "15.1.0",
     "react-dom": "15.1.0",
-    "browserify": "13.1.1",
-    "babelify": "7.3.0",
     "babel-core": "6.9.0",
     "babel-preset-react": "6.16.0",
-    "reactify": "1.1.1",
     "bootstrap": "3.3.6",
     "classnames": "2.2.5",
     "express": "4.14.0"
