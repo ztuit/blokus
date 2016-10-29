@@ -20,7 +20,7 @@
   },
   "scripts": {
     "test": "jasmine-node spec",
-    "start": "http-server -a localhost -p 8000",
+    "start": "http-server -a localhost -p 8080",
     "build:js": "browserify -t [ babelify --presets [ react ] ] ./src/js/main.js -o ./dist/js/main.js",
     "build:html": "cp ./src/view/index.html ./dist/view/main.html",
     "build:dist": "rm -Rf ./dist && mkdir -p ./dist/js && mkdir -p ./dist/view && npm run build:js && npm run build:html &&  npm run build:css",
