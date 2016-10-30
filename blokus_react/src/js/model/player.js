@@ -1,22 +1,44 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-require('babel-core');
+require('../dto/dto');
 
-var Player = React.createClass({
-    getInitialState: function() {
-      return {
-        playerName:'',
-        lastTurnTime: null
-      };
-    },
-    render: function() {
-      return (
-      <p>
-       {this.props.pid} Last Turn at {this.state.lastTurnTime  && this.state.lastTurnTime.toTimeString() || 'none' } Current Turn {this.props.hasCurrentTurn===true ? "true" : "false"}
-      </p>
-      );
-    }
-});
+class Player{
+  constructor(colour, buffer){
+    this._dto = new DTO(buffer || Player.playerDefaults(colour));
+  }
+
+
+  static playerDefaults(colour){
+    return (new DTO()).setNode('colour',colour)
+    .setNode('name', colour + " player")
+    .setNode('turnsTaken', 0)
+    .setNode('turnsPassed', 1)
+    .setNode('lastTurnAt',"")
+    .setNode('shapes',{}).buffer;
+  }
+
+
+  get lastTurnTime(){
+    return this._dto.getNode('lastTurnAt').value;
+  }
+
+  get turnsTaken(){
+
+  }
+
+  get name(){
+    return this._dto.getNode('name').value;
+  }
+
+  get passes(){
+
+  }
+
+  get colour(){
+    return this._dto.getNode('colour').value;
+  }
+
+
+}
+
 
 
 window.Player = Player;

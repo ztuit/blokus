@@ -1,4 +1,4 @@
-require('./model/BlokusApp');
+require('./components/BlokusApp');
 
 $(document).ready(function(){
 

@@ -3,12 +3,13 @@ var ReactDOM = require('react-dom');
 require('babel-core');
 require('./player');
 require('./board-table');
+require('../services/SessionProvider');
 
 var dt = new  Date();
 
 var BlokusApp = React.createClass({
     getInitialState: function() {
-      return {currentTurn:0};
+      return {session:SessionProvider.createNewSession()};
     },
     endCurrentTurn : function(){
       this.setState({currentTurn: ((this.state.currentTurn+1) % 4)});
@@ -18,10 +19,10 @@ var BlokusApp = React.createClass({
       <div>
         <div>
           Blockus Main
-          <Player pid="blue" hasCurrentTurn={this.state.currentTurn===0}/>
-          <Player pid="red" hasCurrentTurn={this.state.currentTurn===1}/>
-          <Player pid="yellow" hasCurrentTurn={this.state.currentTurn===2}/>
-          <Player pid="green" hasCurrentTurn={this.state.currentTurn===3}/>
+          <Player pid="blue" playerData={this.state.session.getPlayer('blue')}/>
+          <Player pid="red" playerData={this.state.session.getPlayer('red')}/>
+          <Player pid="yellow" playerData={this.state.session.getPlayer('yellow')}/>
+          <Player pid="green" playerData={this.state.session.getPlayer('green')}/>
         </div>
         <BoardTable currentTurn={this.state.currentTurn} endTurnHandler={this.endCurrentTurn}/>
       </div>
