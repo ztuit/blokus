@@ -43,6 +43,7 @@ ConsList.prototype = {
    },
    /**
     * Find an item
+    * @return the item if found
     **/
    find : function(compF){
      return this._find(compF, this)
@@ -61,6 +62,13 @@ ConsList.prototype = {
      return rVal;
    },
    /**
+    * See if this list contains an item
+    * @return boolean
+    **/
+    contains : function(compF){
+      return !!this.find(compF);
+    },
+   /**
     * Apply to each, defer to
     **/
    forEach : function(eachF){
@@ -70,10 +78,10 @@ ConsList.prototype = {
      }.bind(this));
    },
    /**
-    * Filter the list
+    * Filter the list, preserving the order
     **/
    filter : function(filterF){
-     return this._filter(this.head, this.tail, filterF, Nil);
+     return this._filter(this.head, this.tail, filterF, Nil).reverseMap(function(e){return e;});
    },
    _filter : function(ele, list, filterF, newList){
 
@@ -85,6 +93,18 @@ ConsList.prototype = {
      }
 
    },
+
+   /**
+    * subtract, the paramter from this list
+    * @return a new list
+    **/
+    subtract : function(other){
+      return this.filter(function(o){
+        return !other.contains(o);
+      }.bind(this));
+    },
+
+
 
    /**
     * Replace an item.
@@ -110,11 +130,24 @@ ConsList.prototype = {
        }
      }.bind(this));
      return rVal;
-   }
+   },
 
+   /**
+    * To array
+    **/
+   toArray : function(){
+     var rval = [];
+     this.forEach(function(e){
+       rval.push(rval);
+     }.bind(this));
+     return rval;
+   }
 };
 
 
+/**
+ * Nil or empty list.
+ **/
 var Nil = {
   isEmpty: true,
   length: 0,
@@ -131,8 +164,16 @@ var Nil = {
 
   },
 
+  contains : function(){
+    return false;
+  },
+
   filter : function(){
     return Nil;
+  },
+
+  toArray : function(){
+    return [];
   },
 
   Cons : function(other){
@@ -141,17 +182,24 @@ var Nil = {
 
 };
 
-
-var cons = function(head, tail) {
-  return new ConsList(head, tail);
-};
-
-var vlist = cons(1, cons(3, cons(42, cons(28, Nil))));
-
-
-function printList(list){
-	return list.isEmpty ? null : list.head + " , " + printList(list.tail);
+/**
+ * Create a cons list from an Array
+ * returns cons list.
+ **/
+function fromArray(array){
+  var consList = Nil;
+  array.forEach(function(e){
+    consList = consList.cons(e);
+  }.bind(this));
+  return consList;
 }
 
 
-module.exports = {list: ConsList, nil:Nil};
+
+module.exports = {list: ConsList, nil:Nil, arrayToCons:fromArray};
+
+if(typeof window !== 'undefined'){
+	window.ConsList = ConsList;
+  window.NilCons = Nil;
+  window.arrayToCons = fromArray;
+}

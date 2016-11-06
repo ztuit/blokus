@@ -12,7 +12,7 @@ class Player{
     .setNode('turnsTaken', 0)
     .setNode('turnsPassed', 1)
     .setNode('lastTurnAt',"")
-    .setNode('shapes',{}).buffer;
+    .setNode('shapesPlayed',{}).buffer;
   }
 
 
@@ -36,6 +36,28 @@ class Player{
     return this._dto.getNode('colour').value;
   }
 
+
+  /**
+   * Set a shape as played.
+   * @returns new player
+   **/
+  shapePlayed(s){
+    var ob = this._dto.getNode('shapesPlayed').value;
+    ob[s.id]=true;
+    return new Player(1,this._dto.setNode('shapesPlayed', ob).value);
+  }
+
+  /**
+   * Identify if the shape has been added to the played set.
+   **/
+  hasPlayedShape(s){
+    var obj = this._dto.getNode('shapesPlayed').value;
+    return obj[s.id]===true;
+  }
+
+  get buffer(){
+    return this._dto.value;
+  }
 
 }
 

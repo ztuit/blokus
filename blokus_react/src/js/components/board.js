@@ -33,13 +33,12 @@ var RBoard = React.createClass({
     },
     _onDrop : function() {
       var key = this.state.highlight.split(",");
-      var newShape = this.props.playedShape.rePosition(new Coordinate(parseInt(key[0]),parseInt(key[1])));
-      //if(this.state.board._canPlace(newShape)){
-        if(this.state.board.addShape(newShape)){
+     var newShape = this.props.playedShape.rePosition(new Coordinate(parseInt(key[0]),parseInt(key[1])));
+    if(this.state.board.addShape(newShape)){
           this.props.shapeDropped(newShape);
         }
         this.setState({highlight:undefined});
-      //}
+        this.setState({board:this.state.board});
     },
     _dragOver : function(e){
       e.preventDefault();

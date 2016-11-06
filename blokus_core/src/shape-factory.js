@@ -18,9 +18,9 @@ ShapeFactory.prototype = {
    * Build the full set of playing shapes for a given colour.
   **/
   buildShapeSet : function(colour){
-
+    var id=0
     return this._shapeMaps().reverseMap(function(m){
-      return new Shape(colour, m);
+      return new Shape(colour, m, id++).normalise();
     }.bind(this));
 
   },

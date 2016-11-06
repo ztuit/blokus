@@ -14,6 +14,10 @@ var BlokusApp = React.createClass({
     endCurrentTurn : function(){
       this.setState({session:this.state.session.nextTurn()});
     },
+    shapePlayed : function(s){
+      var player = this.state.session.getPlayer(s.colour);
+      this.setState({session:this.state.session.updatePlayer(player.shapePlayed(s))});
+    },
     render: function() {
       return (
       <div>
@@ -24,7 +28,7 @@ var BlokusApp = React.createClass({
           <PlayerView key="yellow" currentTurn={this.state.session.currentTurn} playerData={this.state.session.getPlayer('yellow')}/>
           <PlayerView key="green" currentTurn={this.state.session.currentTurn} playerData={this.state.session.getPlayer('green')}/>
         </div>
-        <BoardTable session={this.state.session} endTurnHandler={this.endCurrentTurn}/>
+        <BoardTable session={this.state.session} shapePlayed={this.shapePlayed} endTurnHandler={this.endCurrentTurn}/>
       </div>
       );
     }

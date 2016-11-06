@@ -8,31 +8,30 @@ var cx = require("classnames");
 var PlayerTray = React.createClass({
     getInitialState: function() {
       var sf = new ShapeFactory();
-      var shape = sf.buildShapeSet(this.props.playerData.colour);
-      return {shapes:shape, selected:-1};
+      var shapeSet = sf.buildShapeSet(this.props.playerData.colour);
+
+    //Filter out the played shapes
+    shapeSet = shapeSet.filter(function(s){
+        return !this.props.playerData.hasPlayedShape(s);
+      }.bind(this))
+
+      return {shapes:shapeSet, selected:-1};
     },
-    componentDidMount: function() {
+    shapeDropped: function(s) {
+
+      //Filter out the played shapes
+      var shapeSet = this.state.shapes.filter(function(s){
+          return !this.props.playerData.hasPlayedShape(s);
+        }.bind(this))
+
+        this.setState({shapes:shapeSet});
     },
     _createClickHandler : function(){
       return this.props.endTurnHandler;
     },
 
-    _keyDown : function(id){
-      console.log("tray key down " + id);
-    },
     _selected : function(id){
       this.setState({selected:id});
-    },
-    /**
-     * The shape has been played so
-     * remove from the tray set.
-     **/
-    shapePlayed : function(shape){
-      var newShape = shape.normalise();
-      var newShapes = this.state.shapes.filter(function(el){
-        return !el.equals(newShape);
-      }.bind(this));
-      this.setState({shapes:newShapes});
     },
     /**
      * The shape needs to be rotated
@@ -58,7 +57,7 @@ var PlayerTray = React.createClass({
 
       this.state.shapes.forEach(function(el){
 
-        shapesEl.push(<ShapeView  rotateRight={this._rotateShapeRight} shapeSelected={this._selected} currentSelected={this.state.selected} shapeDragged={this.props.shapeDragged} shapeDragEnd={this.props.shapeDragEnd} shapeId={cnter} key={cnter} shape={el}/>);
+        shapesEl.push(<ShapeView  rotateRight={this._rotateShapeRight} shapeSelected={this._selected} currentSelected={this.state.selected} shapeDragged={this.props.shapeDragged} shapeDragEnd={this.shapeDropped} shapeId={cnter} key={cnter} shape={el}/>);
         cnter+=1;
       }.bind(this));
       var key = "tray_" + this.props.colour;

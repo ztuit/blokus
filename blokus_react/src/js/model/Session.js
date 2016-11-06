@@ -34,6 +34,12 @@ class Session{
     return new Player('na', this._dto.getNode('players').getNode(colour).value);
   }
 
+  updatePlayer(p){
+    var plrs = this._dto.getNode('players').value;
+    plrs[p.colour] = p.buffer;
+    return new Session(this._dto.setNode('players', plrs).buffer);
+  }
+
   nextTurn(){
     return new Session(this._dto.setNode('currentTurn',
                 this._turnMap[this._dto.getNode('currentTurn').value]).buffer);
@@ -42,6 +48,8 @@ class Session{
   get currentTurn(){
     return this._dto.getNode('currentTurn').value;
   }
+
+
 
 }
 

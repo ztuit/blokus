@@ -2,10 +2,11 @@ var Coordinate = require('./coordinate.js');
 /**
  * Shape implementation
  **/
-var Shape = function(colour, shapeMap, position){
+var Shape = function(colour, shapeMap, id, position){
 	this.position = position || new Coordinate(0,0);
 	this.colour = colour;
 	this.shapeMap=shapeMap;
+	this.id=id;
 	this.width=0;
 	this.height=0;
 	this.getCoordinates().forEach(function(el){
@@ -17,8 +18,9 @@ var Shape = function(colour, shapeMap, position){
 Shape.prototype = {
 
 	rePosition : function(newPos){
-		return new Shape(this.colour, this.shapeMap, newPos);
+		return new Shape(this.colour, this.shapeMap, this.id, newPos);
 	},
+
 	getCoordinates : function(){
 		return this.shapeMap.map(function(v){
 			return v.add(this.position);
@@ -28,13 +30,13 @@ Shape.prototype = {
 		var newShapeMap = this.shapeMap.map(function(v){
 				return v.rotate90Left();
 		});
-		return new Shape(this.colour, newShapeMap, this.postion);
+		return new Shape(this.colour, newShapeMap, this.id, this.postion);
 	},
 	rotateRight90 : function(){
 		var newShapeMap = this.shapeMap.map(function(v){
 				return v.rotate90Right();
 		});
-		return new Shape(this.colour, newShapeMap, this.position);
+		return new Shape(this.colour, newShapeMap, this.id, this.position);
 	},
 	/**
 	 * This is more than just intersects, it
@@ -135,7 +137,7 @@ Shape.prototype = {
 		var newShapeMap = coords.map(function(el){
 				return el.add(offSet);
 		}.bind(this));
-		return new Shape(this.colour, newShapeMap);
+		return new Shape(this.colour, newShapeMap, this.id);
 	}
 };
 
