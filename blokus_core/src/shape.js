@@ -138,6 +138,14 @@ Shape.prototype = {
 				return el.add(offSet);
 		}.bind(this));
 		return new Shape(this.colour, newShapeMap, this.id);
+	},
+
+	value : function(){
+		var smarray = [];
+		this.shapeMap.forEach(function(c){
+			smarray.push(c.value());
+		}.bind(this));
+		return {id:this.id, colour:this.colour, position: this.position.value(), map:smarray};
 	}
 };
 

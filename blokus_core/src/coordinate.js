@@ -49,7 +49,14 @@
      **/
      corners : function(other){
        return Math.abs(this.x-other.x)===1 && Math.abs(this.y-other.y)===1;
-     }
+     },
+
+     /**
+      * Get a dto version of this
+      **/
+      value : function(){
+        return {x:this.x, y:this.y, z:this.z};
+      }
 
   };
 

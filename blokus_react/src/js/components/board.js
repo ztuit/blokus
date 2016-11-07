@@ -7,12 +7,10 @@ require('./board');
 
 var RBoard = React.createClass({
     getInitialState: function() {
-      var b = new Board(parseInt(this.props.width),parseInt(this.props.height));
-      if(this.props.shapes){
-        this.props.shapes.forEach(function(el){
-          var pld = b.assignPlace(el);
+      var b = new Board(parseInt(this.props.session.board.width),parseInt(this.props.session.board.height));
+        this.props.session.board.shapesPlayed.forEach(function(el){
+          b.addShape(el);
         }.bind(this));
-      }
       return {board: b};
     },
     _dragEnter : function(e){
@@ -34,7 +32,7 @@ var RBoard = React.createClass({
     _onDrop : function() {
       var key = this.state.highlight.split(",");
      var newShape = this.props.playedShape.rePosition(new Coordinate(parseInt(key[0]),parseInt(key[1])));
-    if(this.state.board.addShape(newShape)){
+     if(this.state.board.addShape(newShape)){
           this.props.shapeDropped(newShape);
         }
         this.setState({highlight:undefined});

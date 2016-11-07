@@ -1,6 +1,6 @@
 require('../dto/dto');
 require('./Player');
-
+require('./BoardModel');
 class Session{
 
   constructor(buffer){
@@ -24,6 +24,7 @@ class Session{
         'green':Player.playerDefaults('green')
       });
     dto = dto.setNode('currentTurn', 'blue');
+    dto = dto.setNode('board', BoardModel.boardDefaults());
     return dto.buffer;
   }
 
@@ -49,7 +50,14 @@ class Session{
     return this._dto.getNode('currentTurn').value;
   }
 
-
+  get board(){
+    var ary = [];
+    ['blue','green','yellow','red'].forEach(function(c){
+      ary.concat(this.getPlayer(c).shapesPlayed());
+    }.bind(this));
+    var brd = this._dto.getNode('board').setNode('shapesPlayed', ary);
+    return new BoardModel(brd.value);
+  }
 
 }
 
