@@ -189,7 +189,7 @@ var Nil = {
 function fromArray(array){
   var consList = Nil;
   array.forEach(function(e){
-    consList = consList.cons(e);
+    consList = consList.Cons(e);
   }.bind(this));
   return consList;
 }

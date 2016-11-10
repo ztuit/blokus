@@ -53,10 +53,14 @@ class Session{
   get board(){
     var ary = [];
     ['blue','green','yellow','red'].forEach(function(c){
-      ary.concat(this.getPlayer(c).shapesPlayed());
+      ary = ary.concat(this.getPlayer(c).shapesPlayed());
     }.bind(this));
     var brd = this._dto.getNode('board').setNode('shapesPlayed', ary);
     return new BoardModel(brd.value);
+  }
+
+  get value(){
+    return this._dto.value;
   }
 
 }

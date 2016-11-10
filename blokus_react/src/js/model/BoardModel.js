@@ -1,4 +1,5 @@
 require('../dto/dto');
+require('./ShapeModel')
 
 class BoardModel{
   constructor(buffer){
@@ -7,8 +8,7 @@ class BoardModel{
 
 
   static boardDefaults(){
-    return (new DTO()).setNode('dimensions',{height:20, width:20})
-    .setNode('shapesPlayed',[]).buffer;
+    return (new DTO()).setNode('dimensions',{height:20, width:20}).buffer;
   }
 
   get height(){
@@ -20,7 +20,9 @@ class BoardModel{
   }
 
   get shapesPlayed(){
-    return this._dto.getNode('shapesPlayed').value;
+    return this._dto.getNode('shapesPlayed').value.map(function(e){
+        return (new ShapeModel(e)).toShape;
+    }.bind(this));
   }
 
 

@@ -7,16 +7,14 @@ require('./player-tray');
 
 var BoardTable = React.createClass({
     getInitialState: function() {
-      return {playedShape:undefined, trays:[]};
+      return {playedShape:undefined};
     },
     _shapeDragged : function(shape){
+      console.log("shape dragged 2");
       this.setState({playedShape: shape});
     },
     _shapeDragEnd : function(shape){
       this.setState({playedShape: undefined});
-    },
-    _trayMounted : function(tray){
-      this.state.trays.push(tray);
     },
     _keyDown : function(){
       console.log("key down board table");
@@ -25,11 +23,11 @@ var BoardTable = React.createClass({
       return (
       <div className="gameTable">
         <RBoard  session={this.props.session} shapeDropped={this.props.shapePlayed} playedShape={this.state.playedShape}/>
-        <PlayerTray ref={this._trayMounted} shapeDragged={this._shapeDragged}   currentTurn={this.props.session.currentTurn} playerData={this.props.session.getPlayer("blue")} endTurnHandler={this.props.endTurnHandler}/>
-        <PlayerTray ref={this._trayMounted} shapeDragged={this._shapeDragged}   currentTurn={this.props.session.currentTurn} playerData={this.props.session.getPlayer("green")}  endTurnHandler={this.props.endTurnHandler}/>
-        <PlayerTray ref={this._trayMounted} shapeDragged={this._shapeDragged}   currentTurn={this.props.session.currentTurn} playerData={this.props.session.getPlayer("red")}  endTurnHandler={this.props.endTurnHandler}/>
+        <PlayerTray shapeDragged={this._shapeDragged}   currentTurn={this.props.session.currentTurn} playerData={this.props.session.getPlayer("blue")} endTurnHandler={this.props.endTurnHandler}/>
+        <PlayerTray  shapeDragged={this._shapeDragged}   currentTurn={this.props.session.currentTurn} playerData={this.props.session.getPlayer("green")}  endTurnHandler={this.props.endTurnHandler}/>
+        <PlayerTray shapeDragged={this._shapeDragged}   currentTurn={this.props.session.currentTurn} playerData={this.props.session.getPlayer("red")}  endTurnHandler={this.props.endTurnHandler}/>
 
-        <PlayerTray ref={this._trayMounted} shapeDragged={this._shapeDragged}   currentTurn={this.props.session.currentTurn} playerData={this.props.session.getPlayer("yellow")}  endTurnHandler={this.props.endTurnHandler}/>
+        <PlayerTray  shapeDragged={this._shapeDragged}   currentTurn={this.props.session.currentTurn} playerData={this.props.session.getPlayer("yellow")}  endTurnHandler={this.props.endTurnHandler}/>
 
       </div>
       );

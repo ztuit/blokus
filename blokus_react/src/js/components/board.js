@@ -4,14 +4,27 @@ require('babel-core');
 var blokus = require('../../../node_modules/blokus/blokus.js');
 var cx = require('classnames');
 require('./board');
+//require('./cons');
 
 var RBoard = React.createClass({
     getInitialState: function() {
       var b = new Board(parseInt(this.props.session.board.width),parseInt(this.props.session.board.height));
-        this.props.session.board.shapesPlayed.forEach(function(el){
-          b.addShape(el);
-        }.bind(this));
+
       return {board: b};
+    },
+    componentWillMount: function () {
+      this.prepareComponentState(this.props);
+    },
+    componentWillReceiveProps: function (nextProps) {
+      this.prepareComponentState(nextProps);
+    },
+    prepareComponentState: function (props) {
+      console.log("prepare comp state board")
+      props.session.board.shapesPlayed.forEach(function(el){
+        this.state.board.addShape(el);
+      }.bind(this));
+    this.state.board.setShapes(arrayToCons(props.session.board.shapesPlayed));
+      this.setState({board:this.state.board});
     },
     _dragEnter : function(e){
       e.preventDefault();

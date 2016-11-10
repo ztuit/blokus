@@ -43,7 +43,7 @@ class Player{
    **/
   shapePlayed(s){
     var ob = this._dto.getNode('shapesPlayed').value;
-    ob[s.id]=s.value();
+    ob[s.id]= s.value();
     return new Player(1,this._dto.setNode('shapesPlayed', ob).value);
   }
 
@@ -60,7 +60,7 @@ class Player{
     var spsp = this._dto.getNode('shapesPlayed').value;
     for(var k in spsp){
       if(spsp.hasOwnProperty(k)){
-        ary.push(spsp);
+        ary.push(spsp[k]);
       }
     }
     return ary;

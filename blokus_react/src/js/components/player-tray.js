@@ -7,15 +7,25 @@ var cx = require("classnames");
 
 var PlayerTray = React.createClass({
     getInitialState: function() {
+
+
+      return {selected:-1};
+    },
+    componentWillMount: function () {
+      this.prepareComponentState(this.props);
+    },
+    componentWillReceiveProps: function (nextProps) {
+      this.prepareComponentState(nextProps);
+    },
+    prepareComponentState: function (props) {
       var sf = new ShapeFactory();
-      var shapeSet = sf.buildShapeSet(this.props.playerData.colour);
+      var shapeSet = sf.buildShapeSet(props.playerData.colour);
 
     //Filter out the played shapes
     shapeSet = shapeSet.filter(function(s){
-        return !this.props.playerData.hasPlayedShape(s);
+        return !props.playerData.hasPlayedShape(s);
       }.bind(this))
-
-      return {shapes:shapeSet, selected:-1};
+      this.setState({shapes:shapeSet});
     },
     shapeDropped: function(s) {
 

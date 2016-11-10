@@ -147,6 +147,9 @@ Shape.prototype = {
 		}.bind(this));
 		return {id:this.id, colour:this.colour, position: this.position.value(), map:smarray};
 	}
+
+
+
 };
 
 if(typeof window !== 'undefined'){
