@@ -15,6 +15,7 @@
 'use strict';
 
 var express = require('express');
+var sm = require('./sessionmgr');
 
 var app = express();
 var path = require('path');
@@ -23,6 +24,40 @@ app.use("/", express.static(__dirname + "/dist"));
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/dist/view/main.html'));
+});
+
+
+
+
+//Session management
+//Creation of a new game creates two files with the numbers player1 and Game
+//Ucontents of player1 -> Game
+//There are two ids
+
+//New game session
+//Initial structures created
+app.get('/session', function (req, res, next) {
+  res.send(sm.createNewGame());
+  next();
+});
+
+//Join a game session
+//Creates a new user in the next available player slot
+app.get('/session/:gameid/join', function (req, res, next) {
+  res.send(sm.joinGame(req.params.gameid));
+  next();
+});
+
+//Retrieve a game session
+app.get('/session/:playerid', function (req, res, next) {
+  res.send(sm.retrieveForPlayer(req.params.playerid));
+  next();
+});
+
+//Up date the game session
+app.put('/session/:playerid', function (req, res, next) {
+  res.send(sm.playerGameUpdate(req.params.playerid, req.body));
+  next();
 });
 
 // Start the server
