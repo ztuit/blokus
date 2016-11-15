@@ -9,6 +9,8 @@ var dt = new  Date();
 var i = 0;
 var BlokusApp = React.createClass({
     getInitialState: function() {
+
+      console.log("Route props " + this.props.params);
       return {session:SessionProvider.createNewSession()};
     },
     endCurrentTurn : function(){
