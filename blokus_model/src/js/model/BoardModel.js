@@ -1,5 +1,6 @@
-require('../dto/dto');
-require('./ShapeModel')
+'use strict'
+var DTO = require('../dto/dto');
+var ShapeModel = require('./ShapeModel')
 
 class BoardModel{
   constructor(buffer){
@@ -25,10 +26,12 @@ class BoardModel{
     }.bind(this));
   }
 
-
+  get internal(){
+    return this._dto.buffer;
+  }
 
 }
 
 
 
-window.BoardModel = BoardModel;
+module.exports = BoardModel;

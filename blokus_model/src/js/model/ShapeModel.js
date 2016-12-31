@@ -1,3 +1,4 @@
+'use strict'
 require('../dto/dto');
 
 class ShapeModel{
@@ -22,4 +23,4 @@ class ShapeModel{
 
 
 
-window.ShapeModel = ShapeModel;
+module.exports = ShapeModel;

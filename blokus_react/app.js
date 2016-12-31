@@ -26,14 +26,15 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/dist/view/main.html'));
 });
 
-app.get('/:gameId', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/view/main.html'));
-});
+
 
 app.get('/join/:gameId', function (req, res) {
   res.sendFile(path.join(__dirname + '/dist/view/main.html'));
 });
 
+app.get('/play/:gameId/:playerId', function (req, res) {
+  res.sendFile(path.join(__dirname + '/dist/view/main.html'));
+});
 
 
 
@@ -45,7 +46,9 @@ app.get('/join/:gameId', function (req, res) {
 //New game session
 //Initial structures created
 app.get('/session', function (req, res, next) {
-  res.send(sm.createNewGame());
+   var ng = sm.createNewGame();
+  console.log('session called ' + ng);
+  res.send(ng);
   next();
 });
 

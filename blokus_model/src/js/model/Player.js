@@ -1,4 +1,5 @@
-require('../dto/dto');
+'use strict'
+var DTO = require('../dto/dto');
 
 class Player{
   constructor(colour, buffer){
@@ -36,6 +37,9 @@ class Player{
     return this._dto.getNode('colour').value;
   }
 
+ set colour(c){
+   return new Player(1,this._dto.setNode('colour', c).buffer);
+ }
 
   /**
    * Set a shape as played.
@@ -66,12 +70,12 @@ class Player{
     return ary;
   }
 
-  get buffer(){
-    return this._dto.value;
+  get internal(){
+    return this._dto.buffer;
   }
 
 }
 
 
 
-window.Player = Player;
+module.exports = Player;

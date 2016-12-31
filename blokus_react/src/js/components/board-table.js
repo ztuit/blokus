@@ -23,11 +23,7 @@ var BoardTable = React.createClass({
       return (
       <div className="gameTable">
         <RBoard  session={this.props.session} shapeDropped={this.props.shapePlayed} playedShape={this.state.playedShape}/>
-        <PlayerTray shapeDragged={this._shapeDragged}   currentTurn={this.props.session.currentTurn} playerData={this.props.session.getPlayer("blue")} endTurnHandler={this.props.endTurnHandler}/>
-        <PlayerTray  shapeDragged={this._shapeDragged}   currentTurn={this.props.session.currentTurn} playerData={this.props.session.getPlayer("green")}  endTurnHandler={this.props.endTurnHandler}/>
-        <PlayerTray shapeDragged={this._shapeDragged}   currentTurn={this.props.session.currentTurn} playerData={this.props.session.getPlayer("red")}  endTurnHandler={this.props.endTurnHandler}/>
-
-        <PlayerTray  shapeDragged={this._shapeDragged}   currentTurn={this.props.session.currentTurn} playerData={this.props.session.getPlayer("yellow")}  endTurnHandler={this.props.endTurnHandler}/>
+        <PlayerTray shapeDragged={this._shapeDragged}   currentTurn={this.props.session.colour} playerData={this.props.session.game.getPlayer("blue")} endTurnHandler={this.props.endTurnHandler}/>
 
       </div>
       );

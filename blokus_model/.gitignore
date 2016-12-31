@@ -1,0 +1,5 @@
+node_modules/*
+dist/*
+out.js
+!/.DS_Store
+data/*

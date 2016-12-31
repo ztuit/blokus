@@ -6,6 +6,11 @@ var fs = require('fs');
 var colours = ['blue', 'red', 'green', 'yellow'];
 var turnMap = {'blue':'red', 'red':'green', 'green':'yellow', 'yellow':'blue'};
 
+var GameModel = require('./node_modules/blokus-model/blokus-model.js').GameModel;
+var DTO = require('./node_modules/blokus-model/blokus-model.js').DTO;
+var Player = require('./node_modules/blokus-model/blokus-model.js').Player;
+var Turn = require('./node_modules/blokus-model/blokus-model.js').Turn;
+
 class SessionMgr{
 
   static createNewGame(){
@@ -13,21 +18,27 @@ class SessionMgr{
     var playerId = uuid.v1();
     var gmpth = path.join(__dirname + '/data/game/' + gId);
     var gamefd = fs.openSync(gmpth, 'w');
-    var game = {id:gId, nextTurn: 'blue', players:{'blue':playerId}, gameState:{}};
-    fs.writeFile(gmpth, JSON.stringify(game));
+    //console.log(BlokusModel);
+    var game = new GameModel();
+    var newPlayer =  SessionMgr.createPlayer(playerId,gId, "blue");
+    game = game.updatePlayer(newPlayer);
+    fs.writeFile(gmpth, JSON.stringify(game.internal));
     fs.closeSync(gamefd);
-
-    return SessionMgr.createPlayer(playerId,gId, "blue");
+    var turn = new Turn();
+    turn = turn.setPlayerId(playerId);
+    turn = turn.setGameId(gId);
+    turn = turn.setGame(game);
+    return turn.internal;
   }
 
   static createPlayer(playerId, gameId, c){
     var plpth = path.join(__dirname + '/data/player/' + playerId);
     var playerfd = fs.openSync(plpth, 'w');
 
-    var playerGame = {id:playerId, colour:c, gameId:gameId};
+    var playerGame = {id:playerId, colour:c, gameId:gameId}
     fs.writeFile(plpth, JSON.stringify(playerGame));
     fs.closeSync(playerfd);
-    return playerGame;
+    return new Player(c);
   }
 
   static joinGame(id){
@@ -46,7 +57,13 @@ class SessionMgr{
   static retrieveForPlayer(id){
     var plyer = SessionMgr.readPlayer(id);
     var g = SessionMgr.readGame(plyer.gameId);
-    return {colour: plyer.colour, game:g.gameState};
+    var turn = new Turn();
+    turn = turn.setPlayerId(id);
+    turn = turn.setGameId(g.id);
+    turn = turn.setGame(g);
+    console.log(g.internal);
+    turn = turn.setColour(plyer.colour);
+    return turn.internal;
   }
 
   static readGame(id){
@@ -54,7 +71,7 @@ class SessionMgr{
     var gamefd = fs.openSync(gmpth, 'r+');
     var rVal = JSON.parse(fs.readFileSync(gmpth));
     fs.closeSync(gamefd);
-    return rVal;
+    return new GameModel(rVal);
   }
 
   static writeGame(g){

@@ -1,9 +1,9 @@
-
+'use strict'
 
 class DTO{
 
-  constructor(buffer={}){
-      this._buffer=buffer;
+  constructor(buffer){
+      this._buffer=buffer || {};
   }
 
   getNode(name){
@@ -19,10 +19,16 @@ class DTO{
     return new DTO(newBuffer);
   }
 
+  /**
+   * Returns the raw buffer. Used for simple value types
+   */
   get value(){
     return this.buffer;
   }
 
+  /**
+   * Returns a copy of the internal buffer as an object.
+   **/
   get buffer(){
     return typeof(this._buffer)==='object' ? JSON.parse(JSON.stringify(this._buffer)) : this._buffer;
   }
@@ -30,4 +36,5 @@ class DTO{
 
 }
 
-window.DTO = DTO;
+
+module.exports = DTO;

@@ -8,7 +8,7 @@ require('./board');
 
 var RBoard = React.createClass({
     getInitialState: function() {
-      var b = new Board(parseInt(this.props.session.board.width),parseInt(this.props.session.board.height));
+      var b = new Board(parseInt(this.props.session.game.board.width),parseInt(this.props.session.game.board.height));
 
       return {board: b};
     },
@@ -20,10 +20,10 @@ var RBoard = React.createClass({
     },
     prepareComponentState: function (props) {
       console.log("prepare comp state board")
-      props.session.board.shapesPlayed.forEach(function(el){
+      props.session.game.board.shapesPlayed.forEach(function(el){
         this.state.board.addShape(el);
       }.bind(this));
-    this.state.board.setShapes(arrayToCons(props.session.board.shapesPlayed));
+    this.state.board.setShapes(arrayToCons(props.session.game.board.shapesPlayed));
       this.setState({board:this.state.board});
     },
     _dragEnter : function(e){

@@ -5,23 +5,29 @@ require('./player');
 require('./board-table');
 require('../services/SessionProvider');
 
+
 var dt = new  Date();
 var i = 0;
 var BlokusApp = React.createClass({
     getInitialState: function() {
 
       console.log("Route props " + this.props.params);
+      SessionProvider.loadSession(this.props.params.playerId).then(function(data) {
+        //browserHistory.push('/play/' + data.gameId + "/" + data.id);
+        this.setState({session:SessionProvider.parseTurn(data)});
+      }.bind(this));
       return {session:SessionProvider.createNewSession()};
     },
     endCurrentTurn : function(){
-      var sess = this.state.session.nextTurn();
+      var sess = this.state.session.game.nextTurn();
       SessionProvider.saveSession(sess);
-
       this.setState({session:sess});
     },
     shapePlayed : function(s){
-      var player = this.state.session.getPlayer(s.colour);
-      this.setState({session:this.state.session.updatePlayer(player.shapePlayed(s))});
+      var player = this.state.session.game.getPlayer(s.colour);
+      var newGame = this.state.session.game.updatePlayer(player.shapePlayed(s));
+      var newTurn = this.state.session.setGame(newGame);
+      this.setState({session:newTurn});
     },
     loadSession : function(){
       var sess = SessionProvider.loadSession();
@@ -32,11 +38,7 @@ var BlokusApp = React.createClass({
       <div>
         <div>
           <button onClick={this.loadSession}>Load Game</button>
-          <PlayerView key="blue" currentTurn={this.state.session.currentTurn} playerData={this.state.session.getPlayer('blue')}/>
-          <PlayerView key="red" currentTurn={this.state.session.currentTurn} playerData={this.state.session.getPlayer('red')}/>
-          <PlayerView key="yellow" currentTurn={this.state.session.currentTurn} playerData={this.state.session.getPlayer('yellow')}/>
-          <PlayerView key="green" currentTurn={this.state.session.currentTurn} playerData={this.state.session.getPlayer('green')}/>
-        </div>
+          </div>
         <BoardTable session={this.state.session} shapePlayed={this.shapePlayed} endTurnHandler={this.endCurrentTurn}/>
       </div>
       );

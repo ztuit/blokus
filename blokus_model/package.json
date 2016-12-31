@@ -1,0 +1,20 @@
+{
+  "name": "blokus-model",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies":{
+  	"jasmine":"2.4.1",
+  	"jasmine-node": "^1.14.5",
+    "browserify": "13.0.1",
+    "derequire": "2.0.3"
+  },
+  "scripts": {
+    "test": "jasmine-node spec",
+    "build:dist": "rm -Rf ./dist && mkdir ./dist && npm run build:js && npm run build:cpy",
+    "build:js" : "browserify ./src/index.js --standalone blokus | derequire > ./dist/blokus-model.js",
+    "build:cpy": "rm -rf ../blokus_react/node_modules/blokus-model && mkdir ../blokus_react/node_modules/blokus-model && cp ./dist/blokus-model.js ../blokus_react/node_modules/blokus-model"
+  },
+  "author": "",
+  "license": "ISC"
+}
