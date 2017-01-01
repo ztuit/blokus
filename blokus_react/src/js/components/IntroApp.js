@@ -10,6 +10,17 @@ var IntroApp = React.createClass({
         browserHistory.push('/play/' + data.gameId + "/" + data.playerId);
       });
     },
+    _joinGame : function(){
+      return $.getJSON('http://localhost:8080/session/' + this.state.joinId + '/join')
+      .then(function(data) {
+        browserHistory.push('/play/' + data.gameId + "/" + data.playerId);
+      });
+    },
+    updateInputValue: function(evt) {
+      this.setState({
+        joinId: evt.target.value
+      });
+    },
     render: function() {
       return (
       <div>
@@ -17,7 +28,7 @@ var IntroApp = React.createClass({
           <button onClick={this._createNewGame}>Create New Game</button>
           <br/>
           <br/>
-          <button>Join a game</button><input placeholder="gameid" type="text"/>
+          <button onClick={this._joinGame}>Join a game</button><input placeholder="gameid" type="text" onChange={this.updateInputValue}/>
         </div>
       </div>
       );

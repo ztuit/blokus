@@ -25,6 +25,10 @@ class TurnModel{
     return new TurnModel(this._dto.setNode('playerId', id).buffer);
   }
 
+  get playerId(){
+    return this._dto.getNode('playerId').value;
+  }
+
   setGameId(id){
     return new TurnModel(this._dto.setNode('gameId', id).buffer);
   }

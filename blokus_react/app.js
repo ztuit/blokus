@@ -17,7 +17,16 @@
 var express = require('express');
 var sm = require('./sessionmgr');
 
+
 var app = express();
+
+var bodyParser = require('body-parser');
+
+// Add this line below
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(bodyParser.json());
+
 var path = require('path');
 app.use("/", express.static(__dirname));
 app.use("/", express.static(__dirname + "/dist"));
@@ -66,7 +75,7 @@ app.get('/session/:playerid', function (req, res, next) {
 });
 
 //Up date the game session
-app.put('/session/:playerid', function (req, res, next) {
+app.post('/session/:playerid', function (req, res, next) {
   res.send(sm.playerGameUpdate(req.params.playerid, req.body));
   next();
 });

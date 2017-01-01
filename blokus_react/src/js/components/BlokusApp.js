@@ -19,9 +19,12 @@ var BlokusApp = React.createClass({
       return {session:SessionProvider.createNewSession()};
     },
     endCurrentTurn : function(){
-      var sess = this.state.session.game.nextTurn();
-      SessionProvider.saveSession(sess);
-      this.setState({session:sess});
+
+      SessionProvider.saveSession(this.state.session).then(function(data) {
+        //browserHistory.push('/play/' + data.gameId + "/" + data.id);
+        this.setState({session:SessionProvider.parseTurn(data)});
+      }.bind(this));
+      
     },
     shapePlayed : function(s){
       var player = this.state.session.game.getPlayer(s.colour);
@@ -36,9 +39,6 @@ var BlokusApp = React.createClass({
     render: function() {
       return (
       <div>
-        <div>
-          <button onClick={this.loadSession}>Load Game</button>
-          </div>
         <BoardTable session={this.state.session} shapePlayed={this.shapePlayed} endTurnHandler={this.endCurrentTurn}/>
       </div>
       );

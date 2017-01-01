@@ -2,6 +2,7 @@
 var DTO = require('../dto/dto');
 var Player = require('./Player');
 var BoardModel = require('./BoardModel');
+var uuid = require('uuid');
 
 class GameModel{
 
@@ -17,7 +18,7 @@ class GameModel{
 
   static defaults(){
     var dto = new DTO();
-    dto = dto.setNode('id', new Date());//TODO: real uuid
+    dto = dto.setNode('id', uuid.v1());
     dto = dto.setNode('players',
       {
       //  'blue':Player.playerDefaults('blue'),
@@ -34,25 +35,32 @@ class GameModel{
 
 
   getPlayer(colour){
-
     return new Player('na', this._dto.getNode('players').getNode(colour).value);
+  }
+
+  get players(){
+    return this._dto.getNode('players').buffer;
+  }
+
+  get currentPlayer(){
+    return this.getPlayer(this.currentTurn);
   }
 
   updatePlayer(p){
     var plrs = this._dto.getNode('players').value;
     plrs[p.colour] = p.internal;
-    var gme = this._dto.setNode('players', plrs);
-    return new GameModel(gme.buffer);
+    var gme = this._dto.setNode('players', plrs).buffer;
+    return new GameModel(gme);
   }
 
 
   nextTurn(){
-    return new GameModel(this._dto.setNode('nextTurn',
-                this._turnMap[this._dto.getNode('nextTurn').value]).buffer);
+    return new GameModel(this._dto.setNode('currentTurn',
+                this._turnMap[this._dto.getNode('currentTurn').value]).buffer);
   }
 
   get currentTurn(){
-    return this._dto.getNode('nextTurn').value;
+    return this._dto.getNode('currentTurn').value;
   }
 
   get board(){
@@ -67,8 +75,9 @@ class GameModel{
 
 
   get id(){
-    return this._dto.getNode('id').value;
+    return this._dto.getNode('id').buffer;
   }
+
 
   get internal(){
     return this._dto.buffer;

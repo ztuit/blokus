@@ -14,7 +14,7 @@ class SessionProvider{
 
 
     static saveSession(s){
-      console.log(s.value);
+      return $.post('http://localhost:8080/session/' + s.playerId,s.internal);
     }
 
     static createNewSession(){

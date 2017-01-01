@@ -10,7 +10,6 @@ var BoardTable = React.createClass({
       return {playedShape:undefined};
     },
     _shapeDragged : function(shape){
-      console.log("shape dragged 2");
       this.setState({playedShape: shape});
     },
     _shapeDragEnd : function(shape){
@@ -22,8 +21,9 @@ var BoardTable = React.createClass({
     render: function() {
       return (
       <div className="gameTable">
+        <div>Current Turn is with: {this.props.session.game.currentTurn}</div>
         <RBoard  session={this.props.session} shapeDropped={this.props.shapePlayed} playedShape={this.state.playedShape}/>
-        <PlayerTray shapeDragged={this._shapeDragged}   currentTurn={this.props.session.colour} playerData={this.props.session.game.getPlayer("blue")} endTurnHandler={this.props.endTurnHandler}/>
+        <PlayerTray shapeDragged={this._shapeDragged}   currentTurn={this.props.session.colour} playerData={this.props.session.game.currentPlayer} endTurnHandler={this.props.endTurnHandler}/>
 
       </div>
       );

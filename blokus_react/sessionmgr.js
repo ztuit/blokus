@@ -14,12 +14,13 @@ var Turn = require('./node_modules/blokus-model/blokus-model.js').Turn;
 class SessionMgr{
 
   static createNewGame(){
-    var gId = uuid.v1();
+    var game = new GameModel();
+    var gId = game.id;
+
     var playerId = uuid.v1();
     var gmpth = path.join(__dirname + '/data/game/' + gId);
     var gamefd = fs.openSync(gmpth, 'w');
     //console.log(BlokusModel);
-    var game = new GameModel();
     var newPlayer =  SessionMgr.createPlayer(playerId,gId, "blue");
     game = game.updatePlayer(newPlayer);
     fs.writeFile(gmpth, JSON.stringify(game.internal));
@@ -34,7 +35,6 @@ class SessionMgr{
   static createPlayer(playerId, gameId, c){
     var plpth = path.join(__dirname + '/data/player/' + playerId);
     var playerfd = fs.openSync(plpth, 'w');
-
     var playerGame = {id:playerId, colour:c, gameId:gameId}
     fs.writeFile(plpth, JSON.stringify(playerGame));
     fs.closeSync(playerfd);
@@ -44,14 +44,22 @@ class SessionMgr{
   static joinGame(id){
     var playerId = uuid.v1();
     var game = this.readGame(id);
+    //console.log(game);
     //Find next available player slot
     var noPlyrs = Object.keys(game.players).length;
     if(noPlyrs==4){
       throw 'already have 4 players';
     }
-    game.players[colours[noPlyrs]] = playerId;
+    var newPlayer = SessionMgr.createPlayer(playerId, id, colours[noPlyrs]);
+
+    game = game.updatePlayer(newPlayer);
+
     SessionMgr.writeGame(game);
-    return SessionMgr.createPlayer(playerId, id, colours[noPlyrs]);
+    var turn = new Turn();
+    turn = turn.setPlayerId(playerId);
+    turn = turn.setGameId(game.id);
+    turn = turn.setGame(game);
+    return turn.internal;
   }
 
   static retrieveForPlayer(id){
@@ -61,7 +69,7 @@ class SessionMgr{
     turn = turn.setPlayerId(id);
     turn = turn.setGameId(g.id);
     turn = turn.setGame(g);
-    console.log(g.internal);
+
     turn = turn.setColour(plyer.colour);
     return turn.internal;
   }
@@ -77,7 +85,7 @@ class SessionMgr{
   static writeGame(g){
     var gmpth = path.join(__dirname + '/data/game/' + g.id);
     var gamefd = fs.openSync(gmpth, 'r+');
-    fs.writeFile(gmpth, JSON.stringify(g));
+    fs.writeFile(gmpth, JSON.stringify(g.internal));
     fs.closeSync(gamefd);
   }
 
@@ -89,15 +97,26 @@ class SessionMgr{
 
   static playerGameUpdate(id, state){
     var plyr = SessionMgr.readPlayer(id);
-    var gm = SessionMgr.readGame(plyr.gameId);
+    var game = SessionMgr.readGame(plyr.gameId);
     var rVal = {};
-    if(gm.nextTurn!==plyr.colour){
-      rVal = {'error':'not this players turn'};
+    if(game.currentTurn!==plyr.colour){
+      return {'error':'not this players turn'};
     }
-    gm.gameState = JSON.parse(state);
-    gm.nextTurn = turnMap[gm.nextTurn];
-    SessionMgr.writeGame(gm);
-    return rVal;
+    //extract only the details of the player
+    //saving
+      console.log(state);
+    var turn = new Turn(state);
+
+    var newPlayerState = turn.game.getPlayer(plyr.colour);
+
+    game = game.nextTurn();
+    game = game.updatePlayer(newPlayerState);
+    SessionMgr.writeGame(game);
+    var turn = new Turn();
+    turn = turn.setPlayerId(id);
+    turn = turn.setGameId(game.id);
+    turn = turn.setGame(game);
+    return turn.internal;
   }
 
 }
