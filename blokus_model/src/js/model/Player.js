@@ -47,7 +47,7 @@ class Player{
    **/
   shapePlayed(s){
     var ob = this._dto.getNode('shapesPlayed').value;
-    ob[s.id]= s.value();
+    ob["s" + s.id]= s.value();
     return new Player(1,this._dto.setNode('shapesPlayed', ob).value);
   }
 
@@ -56,7 +56,7 @@ class Player{
    **/
   hasPlayedShape(s){
     var obj = this._dto.getNode('shapesPlayed').value;
-    return obj[s.id]!==undefined;
+    return obj["s"+s.id]!==undefined;
   }
 
   shapesPlayed(){

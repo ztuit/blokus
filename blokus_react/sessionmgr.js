@@ -104,15 +104,19 @@ class SessionMgr{
     }
     //extract only the details of the player
     //saving
-      console.log(state);
+
     var turn = new Turn(state);
 
     var newPlayerState = turn.game.getPlayer(plyr.colour);
 
     game = game.nextTurn();
     game = game.updatePlayer(newPlayerState);
+    newPlayerState = turn.game.getPlayer(plyr.colour);
+    console.log(newPlayerState.shapesPlayed());
+    console.log(JSON.stringify(newPlayerState));
     SessionMgr.writeGame(game);
     var turn = new Turn();
+    turn = turn.setColour(plyr.colour);
     turn = turn.setPlayerId(id);
     turn = turn.setGameId(game.id);
     turn = turn.setGame(game);
