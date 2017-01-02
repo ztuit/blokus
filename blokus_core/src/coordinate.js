@@ -2,8 +2,8 @@
   * cordinate implementaiton
   **/
   var Coordinate = function(x,y) {
-  	this.x=x;
-  	this.y=y;
+  	this.x=parseInt(x);
+  	this.y=parseInt(y);
     this.z=0;
   };
 

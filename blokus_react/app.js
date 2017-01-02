@@ -41,7 +41,7 @@ app.get('/join/:gameId', function (req, res) {
   res.sendFile(path.join(__dirname + '/dist/view/main.html'));
 });
 
-app.get('/play/:gameId/:playerId', function (req, res) {
+app.get('/play/:playerId', function (req, res) {
   res.sendFile(path.join(__dirname + '/dist/view/main.html'));
 });
 

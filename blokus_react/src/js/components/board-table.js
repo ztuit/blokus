@@ -21,6 +21,8 @@ var BoardTable = React.createClass({
     render: function() {
       return (
       <div className="gameTable">
+        <div>Game id: {this.props.session.game.id}</div>
+        <div>You are: {this.props.session.colour}</div>
         <div>Current Turn is with: {this.props.session.game.currentTurn}</div>
         <RBoard  session={this.props.session} shapeDropped={this.props.shapePlayed} playedShape={this.state.playedShape}/>
         <PlayerTray shapeDragged={this._shapeDragged}   currentTurn={this.props.session.colour} playerData={this.props.session.game.currentPlayer} endTurnHandler={this.props.endTurnHandler}/>

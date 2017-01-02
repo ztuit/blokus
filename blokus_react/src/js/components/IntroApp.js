@@ -7,14 +7,17 @@ var IntroApp = React.createClass({
 
       return $.getJSON('http://localhost:8080/session')
       .then(function(data) {
-        browserHistory.push('/play/' + data.gameId + "/" + data.playerId);
+        browserHistory.push('/play/' + data.playerId);
       });
     },
     _joinGame : function(){
       return $.getJSON('http://localhost:8080/session/' + this.state.joinId + '/join')
       .then(function(data) {
-        browserHistory.push('/play/' + data.gameId + "/" + data.playerId);
+        browserHistory.push('/play/' + data.playerId);
       });
+    },
+    _retrieveGame : function(){
+
     },
     updateInputValue: function(evt) {
       this.setState({

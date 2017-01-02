@@ -19,7 +19,7 @@ var ShapeView = React.createClass({
       }.bind(this));
       var newShape = new Shape(this.props.shape.colour, newMap, this.props.shape.id, this.props.shape.position);
       console.log("drag started");
-      this.props.shapeDragged(newShape);
+      //this.props.shapeDragged(newShape);
     },
     _dragEnd: function(){
       this.props.shapeDragEnd(this.props.shape);

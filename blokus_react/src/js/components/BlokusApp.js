@@ -11,7 +11,7 @@ var i = 0;
 var BlokusApp = React.createClass({
     getInitialState: function() {
 
-      console.log("Route props " + this.props.params);
+      
       SessionProvider.loadSession(this.props.params.playerId).then(function(data) {
         //browserHistory.push('/play/' + data.gameId + "/" + data.id);
         this.setState({session:SessionProvider.parseTurn(data)});
@@ -24,7 +24,7 @@ var BlokusApp = React.createClass({
         //browserHistory.push('/play/' + data.gameId + "/" + data.id);
         this.setState({session:SessionProvider.parseTurn(data)});
       }.bind(this));
-      
+
     },
     shapePlayed : function(s){
       var player = this.state.session.game.getPlayer(s.colour);

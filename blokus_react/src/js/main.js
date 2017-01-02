@@ -12,7 +12,7 @@ $(document).ready(function(){
          <Router history={browserHistory}>
 
           <Route name="/" path="/" component={IntroApp} />
-          <Route path="/play/:gameId/:playerId" component={BlokusApp} />
+          <Route path="/play/:playerId" component={BlokusApp} />
           <Redirect path="*" to="/"/>
         </Router>),
        document.getElementById('example')
