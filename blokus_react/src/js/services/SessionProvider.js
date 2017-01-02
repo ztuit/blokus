@@ -14,7 +14,7 @@ class SessionProvider{
 
 
     static saveSession(s){
-      return $.post('http://localhost:8080/session/' + s.playerId,s.internal);
+      return $.post('http://' + window.location.hostname + ":" + window.location.port + '/session/' + s.playerId,s.internal);
     }
 
     static createNewSession(){
@@ -23,7 +23,7 @@ class SessionProvider{
 
     static loadSession(id){
 
-    return $.getJSON('http://localhost:8080/session/' + id);
+    return $.getJSON('http://' + window.location.hostname + ":" + window.location.port + '/session/' + id);
             //.then(function(data) {
               //browserHistory.push('/play/' + data.gameId + "/" + data.id);
             //  return new Session(data);

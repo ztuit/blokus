@@ -56,7 +56,7 @@ app.get('/play/:playerId', function (req, res) {
 //Initial structures created
 app.get('/session', function (req, res, next) {
    var ng = sm.createNewGame();
-  console.log('session called ' + ng);
+  
   res.send(ng);
   next();
 });

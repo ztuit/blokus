@@ -12,19 +12,27 @@ var PlayerTray = React.createClass({
       return {selected:-1};
     },
     componentWillMount: function () {
-      this.prepareComponentState(this.props);
+      //this.prepareComponentState(this.props);
     },
     componentWillReceiveProps: function (nextProps) {
       this.prepareComponentState(nextProps);
     },
     prepareComponentState: function (props) {
       var sf = new ShapeFactory();
+
       var shapeSet = sf.buildShapeSet(props.playerData.colour);
 
-    //Filter out the played shapes
-    shapeSet = shapeSet.filter(function(s){
-        return !props.playerData.hasPlayedShape(s);
-      }.bind(this))
+      //Filter on the set we have, dont create from scrathc everytime
+      //some might have been rotated.
+      if(this.state.shapes){
+        shapeSet = this.state.shapes;
+      }
+
+      //Filter out the played shapes
+      shapeSet = shapeSet.filter(function(s){
+          return !props.playerData.hasPlayedShape(s);
+        }.bind(this))
+
       this.setState({shapes:shapeSet});
     },
     shapeDropped: function(s) {
@@ -57,6 +65,9 @@ var PlayerTray = React.createClass({
       this.setState({shapes:newShapes});
     },
     render: function() {
+      if(!this.state.shapes){
+        return (<div></div>);
+      }
       var cellClassNames = "";
       if(this.props.playerData.colour!==this.props.currentTurn){
         cellClassNames = "hide";
@@ -70,10 +81,10 @@ var PlayerTray = React.createClass({
         shapesEl.push(<ShapeView  rotateRight={this._rotateShapeRight} shapeSelected={this._selected} currentSelected={this.state.selected} shapeDragged={this.props.shapeDragged} shapeDragEnd={this.shapeDropped} shapeId={cnter} key={cnter} shape={el}/>);
         cnter+=1;
       }.bind(this));
-      var key = "tray_" + this.props.colour;
+      var key = "tray_" + this.props.playerData.colour;
       return (
       <div  tabindex="0" className={cellClassNames}  >
-        {this.props.colour} has pieces to play:
+        {this.props.playerData.colour} has pieces to play:
         <div>
           {shapesEl}
         </div>

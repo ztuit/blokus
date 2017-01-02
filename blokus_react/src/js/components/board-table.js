@@ -15,6 +15,7 @@ var BoardTable = React.createClass({
     _shapeDragEnd : function(shape){
       this.setState({playedShape: undefined});
     },
+    
     _keyDown : function(){
       console.log("key down board table");
     },
