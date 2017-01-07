@@ -5,13 +5,13 @@ var i = 0;
 var IntroApp = React.createClass({
     _createNewGame : function(){
 
-      return $.getJSON('http://localhost:8080/session')
+      return $.getJSON(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/session/')
       .then(function(data) {
         browserHistory.push('/play/' + data.playerId);
       });
     },
     _joinGame : function(){
-      return $.getJSON('http://localhost:8080/session/' + this.state.joinId + '/join')
+      return $.getJSON(window.location.protocol + '//' + window.location.hostname + ":" + window.location.port + '/session/' + this.state.joinId + '/join')
       .then(function(data) {
         browserHistory.push('/play/' + data.playerId);
       });
