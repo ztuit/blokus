@@ -28,11 +28,12 @@
   },
   "scripts": {
     "test": "jasmine-node spec",
-    "start": "node app.js",
+    "start": "npm run build:dist && node app.js",
     "build:js": "browserify -t [ babelify --presets [ react ] ] ./src/js/main.js -o ./dist/js/main.js",
     "build:html": "cp ./src/view/index.html ./dist/view/main.html",
-    "build:dist": "rm -Rf ./dist && mkdir -p ./dist/js && mkdir -p ./dist/view && npm run build:js && npm run build:html &&  npm run build:css",
-    "build:css": "cp -R ./assets ./dist/assets"
+    "build:dist": "rm -Rf ./dist && mkdir -p ./dist/js && mkdir -p ./dist/view && npm run build:deps && npm run build:js && npm run build:html &&  npm run build:css",
+    "build:css": "cp -R ./assets ./dist/assets",
+    "build:deps": "cd ../blokus_core && npm install && npm run build:dist && cd ../blokus_model && npm install && npm run build:dist && cd ../blokus_react"
   },
   "author": "Stu",
   "license": "ISC"
