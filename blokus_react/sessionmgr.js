@@ -6,10 +6,10 @@ var fs = require('fs');
 var colours = ['blue', 'red', 'green', 'yellow'];
 var turnMap = {'blue':'red', 'red':'green', 'green':'yellow', 'yellow':'blue'};
 
-var GameModel = require('./node_modules/blokus-model/blokus-model.js').GameModel;
-var DTO = require('./node_modules/blokus-model/blokus-model.js').DTO;
-var Player = require('./node_modules/blokus-model/blokus-model.js').Player;
-var Turn = require('./node_modules/blokus-model/blokus-model.js').Turn;
+var GameModel = require('./blokus-model.js').GameModel;
+var DTO = require('./blokus-model.js').DTO;
+var Player = require('./blokus-model.js').Player;
+var Turn = require('./blokus-model.js').Turn;
 
 class SessionMgr{
 

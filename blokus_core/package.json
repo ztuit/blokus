@@ -13,7 +13,7 @@
     "test": "jasmine-node spec",
     "build:dist": "rm -Rf ./dist && mkdir ./dist && npm run build:js && npm run build:cpy",
     "build:js" : "browserify ./src/index.js --standalone blokus | derequire > ./dist/blokus.js && cp ./dist/blokus.js .",
-    "build:cpy": "rm -rf ../blokus_react/node_modules/blokus && mkdir ../blokus_react/node_modules/blokus && cp ./dist/blokus.js ../blokus_react/node_modules/blokus"
+    "build:cpy": "rm -rf ../blokus_react/node_modules/blokus && mkdir ../blokus_react/node_modules/blokus && cp ./dist/blokus.js ../blokus_react"
   },
   "author": "",
   "license": "ISC"

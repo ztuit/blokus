@@ -16,7 +16,7 @@
     "test": "jasmine-node spec",
     "build:dist": "rm -Rf ./dist && mkdir ./dist && npm run build:js && npm run build:cpy",
     "build:js" : "browserify ./src/index.js --standalone blokus | derequire > ./dist/blokus-model.js && cp ./dist/blokus-model.js .",
-    "build:cpy": "rm -rf ../blokus_react/node_modules/blokus-model && mkdir ../blokus_react/node_modules/blokus-model && cp ./dist/blokus-model.js ../blokus_react/node_modules/blokus-model"
+    "build:cpy": "rm -rf ../blokus_react/node_modules/blokus-model && mkdir ../blokus_react/node_modules/blokus-model && cp ./dist/blokus-model.js ../blokus_react"
   },
   "author": "",
   "license": "ISC"
