@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 require('babel-core');
-var blokus = require('../../../node_modules/blokus/blokus.js');
+var blokus = require('../../../blokus.js');
 var cx = require('classnames');
 require('./board');
 //require('./cons');
