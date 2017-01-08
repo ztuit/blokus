@@ -22,6 +22,11 @@ var app = express();
 
 var bodyParser = require('body-parser');
 
+
+
+
+
+
 // Add this line below
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -56,7 +61,7 @@ app.get('/play/:playerId', function (req, res) {
 //Initial structures created
 app.get('/session', function (req, res, next) {
    var ng = sm.createNewGame();
-  
+
   res.send(ng);
   next();
 });
@@ -70,8 +75,10 @@ app.get('/session/:gameid/join', function (req, res, next) {
 
 //Retrieve a game session
 app.get('/session/:playerid', function (req, res, next) {
-  res.send(sm.retrieveForPlayer(req.params.playerid));
-  next();
+  sm.retrieveForPlayer(req.params.playerid).then((g)=>{
+    res.send(g.internal);
+    next();
+  });
 });
 
 //Up date the game session
