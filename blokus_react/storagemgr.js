@@ -33,7 +33,7 @@ class StorageMgr{
            .then((results) => {
              // Task found.
              const entity = results[0];
-             
+
              resolve(new GameModel(entity));
            });
        });
@@ -42,15 +42,20 @@ class StorageMgr{
    }
 
    static writeGameToCloud(g){
-     var key = datastore.key(['Game', g.id]);
-     datastore.save({
-        key: key,
-        data: g.internal
-      }, function(err) {
-          if(err){
-            console.log("Game faile to save " + err);
-          }
+     var promise = new Promise(function(resolve, reject){
+       var key = datastore.key(['Game', g.id]);
+       datastore.save({
+          key: key,
+          data: g.internal
+        }, function(err) {
+            if(err){
+              console.log("Game faile to save " + err);
+            } else{
+              resolve("saved");
+            }
+        });
       });
+      return promise;
    }
 
 
@@ -69,18 +74,23 @@ class StorageMgr{
    }
 
    static createPlayerInCloud(playerId, gameId, c){
-     var key = datastore.key(['Player', playerId]);
-     var playerGame = {id:playerId, colour:c, gameId:gameId}
-     datastore.save({
-        key: key,
-        data: playerGame
-      }, function(err) {
-          if(err){
-            console.log("player faile to create " + err);
-          }
-          console.log(" player created");
+     var promise = new Promise(function(resolve, reject){
+
+         var key = datastore.key(['Player', playerId]);
+         var playerGame = {id:playerId, colour:c, gameId:gameId}
+         datastore.save({
+            key: key,
+            data: playerGame
+          }, function(err) {
+              if(err){
+                console.log("player faile to create " + err);
+              }else{
+                resolve(new Player(c));
+              }
+          });
       });
-     return new Player(c);
+
+      return promise;
    }
 
   /**

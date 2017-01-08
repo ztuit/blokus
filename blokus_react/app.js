@@ -60,17 +60,19 @@ app.get('/play/:playerId', function (req, res) {
 //New game session
 //Initial structures created
 app.get('/session', function (req, res, next) {
-   var ng = sm.createNewGame();
-
-  res.send(ng);
-  next();
+   sm.createNewGame().then((ng)=>{
+    res.send(ng.internal);
+    next();
+  });
 });
 
 //Join a game session
 //Creates a new user in the next available player slot
 app.get('/session/:gameid/join', function (req, res, next) {
-  res.send(sm.joinGame(req.params.gameid));
-  next();
+  sm.joinGame(req.params.gameid).then((t)=>{
+    res.send(t.internal);
+    next();
+  });
 });
 
 //Retrieve a game session
@@ -83,8 +85,10 @@ app.get('/session/:playerid', function (req, res, next) {
 
 //Up date the game session
 app.post('/session/:playerid', function (req, res, next) {
-  res.send(sm.playerGameUpdate(req.params.playerid, req.body));
-  next();
+  sm.playerGameUpdate(req.params.playerid, req.body).then((update)=>{
+    res.send(update.internal);
+    next();
+  });
 });
 
 // Start the server
