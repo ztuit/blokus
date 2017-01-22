@@ -28,9 +28,14 @@ var bodyParser = require('body-parser');
 
 
 // Add this line below
-app.use(bodyParser.urlencoded({ extended: true }))
 
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  limit: '50mb',
+  extended: true,
+  parameterLimit:50000
+}));
+
+app.use( bodyParser.json({limit: '50mb'}) );
 
 var path = require('path');
 app.use("/", express.static(__dirname));
