@@ -381,6 +381,23 @@ if(typeof window !== 'undefined'){
 /**
   * cordinate implementaiton
   **/
+
+  var ZROTM = [[1,1,0],[-1,1,0],[0,0,1]];
+  var XROTM = [[1,0,0],[0,1,1],[0,-1,1]];
+  var YROTM = [[1,0,-1],[0,1,0],[1,0,1]];
+
+  var setIdX = function(mx){
+    mx[0]=[1,0,0];
+  }
+
+  var setIdY = function(mx){
+    mx[1]=[0,1,0];
+  }
+
+  var setIdZ = function(mx){
+    mx[2]=[0,0,1];
+  }
+
   var Coordinate = function(x,y) {
   	this.x=parseInt(x);
   	this.y=parseInt(y);
@@ -392,24 +409,52 @@ if(typeof window !== 'undefined'){
       return new Coordinate(this.x+other.x, this.y+other.y);
   	},
 
-    _rotate : function(angle){
+    _rotate : function(angle, MX, setId){
 
-      var rotM = [[Math.cos(angle), Math.sin(angle),0],
-                  [-Math.sin(angle), Math.cos(angle), 0],
-                  [0,0,0]];
+    //  var rotM = [[Math.cos(angle), Math.sin(angle),0],
+        //          [-Math.sin(angle), Math.cos(angle), 0],
+      //            [0,0,0]];
+
+
+var rotM = [[0,0,0],[0,0,0],[0,0,0]];
+      rotM[0][0]=MX[0][0]*Math.cos(angle);
+      rotM[0][1]=MX[0][1]*Math.sin(angle);
+      rotM[0][2]=MX[0][2]*Math.sin(angle);
+
+      rotM[1][0]=MX[1][0]*Math.sin(angle);
+      rotM[1][1]=MX[1][1]*Math.cos(angle);
+      rotM[1][2]=MX[1][2]*Math.sin(angle);
+
+      rotM[2][0]=MX[2][0]*Math.sin(angle);
+      rotM[2][1]=MX[2][1]*Math.sin(angle);
+      rotM[2][2]=MX[2][2]*Math.cos(angle);
+
+      setId(rotM);
 
       return new Coordinate(parseInt((this.x*rotM[0][0]+this.y*rotM[0][1]+this.z*rotM[0][2]).toFixed(0)), parseInt((this.x*rotM[1][0]+this.y*rotM[1][1]+this.z*rotM[1][2]).toFixed(0)));
     },
 
     rotate90Right : function(){
       var ninety = Math.PI/2;
-      return this._rotate(ninety);
+      return this._rotate(ninety,ZROTM, setIdZ);
     },
 
     rotate90Left : function(){
       var ninety = -Math.PI/2;
-      return this._rotate(ninety);
+      return this._rotate(ninety,ZROTM, setIdZ);
     },
+
+    flipOverX : function(){
+      var oneeighty = Math.PI;
+      return this._rotate(oneeighty,XROTM, setIdX);
+    },
+
+    flipAroundY : function(){
+      var ninety = Math.PI;
+      return this._rotate(ninety,YROTM, setIdY);
+    },
+
+
 
     equals : function(other){
       return this.x===other.x && this.y===other.y && other.z===this.z;
@@ -609,6 +654,27 @@ Shape.prototype = {
 	rotateRight90 : function(){
 		var newShapeMap = this.shapeMap.map(function(v){
 				return v.rotate90Right();
+		});
+		return new Shape(this.colour, newShapeMap, this.id, this.position);
+	},
+	/**
+	 * roatate the shape 180 defgrees
+	 * around the X axis
+	 **/
+	flipOverX:function(){
+		var newShapeMap = this.shapeMap.map(function(v){
+				return v.flipOverX();
+		});
+		
+		return new Shape(this.colour, newShapeMap, this.id, this.position);
+	},
+	/**
+	 * Rotate the shape 180 degrees around the
+	 * Y axis
+	 **/
+	flipAroundY:function(){
+		var newShapeMap = this.shapeMap.map(function(v){
+				return v.flipAroundY();
 		});
 		return new Shape(this.colour, newShapeMap, this.id, this.position);
 	},

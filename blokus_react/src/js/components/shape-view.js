@@ -32,9 +32,15 @@ var ShapeView = React.createClass({
       e.stopPropagation();
     },
     _rotate : function(e){
-      if(e.shiftKey){
+      //if(e.shiftKey){
         this.props.rotateRight(this.props.shape);
-      }
+      //}
+    },
+    _flipY:function(){
+      this.props.flipY(this.props.shape);
+    },
+    _flipX:function(){
+      this.props.flipX(this.props.shape);
     },
     render: function() {
       var rows= [];
@@ -55,10 +61,12 @@ var ShapeView = React.createClass({
       var compClassNames = cx("placeable", {"selectedShape":this.props.currentSelected===this.props.shapeId});
       var divStyle = {width: (this.props.shape.width*32)+5};
       return (
-        <div onKeyPress={this._keyPress} onClick={this._rotate} tabindex="0" style={divStyle} draggable="true"  onDragStart={this._dragStarted} onDragEnd={this._dragEnd} className={compClassNames}>
-          {rows}
-
-        </div>
+          <div onKeyPress={this._keyPress}  tabindex="0" style={divStyle} draggable="true"  onDragStart={this._dragStarted} onDragEnd={this._dragEnd} className={compClassNames}>
+            <input type="button" value="x" onClick={this._flipX}/>
+            <input type="button" value="y" onClick={this._flipY}/>
+            <input type="button" value="z" onClick={this._rotate}/>
+              {rows}
+          </div>
       );
     }
 });

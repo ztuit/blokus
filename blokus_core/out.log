@@ -1,0 +1,120 @@
+
+> blokus@2.0.0 test /Users/stuart/code/javascript/experiments/ecma6/blokus/blokus_core
+> jasmine-node spec
+
+................. shapes...
+SHAPE one
+ X
+
+SHAPE two
+  XX
+
+SHAPE three
+   XXX
+
+SHAPE ltile
+      X 
+    XXX 
+
+SHAPE ttile
+     X  
+    XXX 
+
+SHAPE corner
+    X 
+   XX 
+
+SHAPE foursq
+    XX  
+    XX  
+
+SHAPE snake
+     XX 
+    XX  
+
+SHAPE four
+    XXXX
+
+SHAPE longL
+        X 
+     XXXX 
+
+SHAPE bigT
+      X   
+      X   
+     XXX  
+
+SHAPE bigCorner
+       X  
+       X  
+     XXX  
+
+SHAPE longSnake
+      XXX 
+     XX   
+
+SHAPE eygptian
+       X  
+     XXX  
+     X    
+
+SHAPE five
+     XXXXX
+
+SHAPE bshape
+     X    
+     XX   
+     XX   
+
+SHAPE mshape
+      XX  
+     XX   
+     X    
+
+SHAPE chape
+     XX   
+      X   
+     XX   
+
+SHAPE snakewithfoot
+      XX  
+     XX   
+      X   
+
+SHAPE cross
+      X   
+     XXX  
+      X   
+
+SHAPE lounge
+      X   
+     XXXX 
+
+...
+ FLIP TEST 1
+    XX  
+    X   
+    X   
+
+
+ FLIP TEST 2
+    X   
+    X   
+    XX  
+
+.
+ pre rotate:
+   XXX
+
+
+ Poste rotate:
+   X  
+    X 
+     X
+
+.
+
+Finished in 0.085 seconds
+22 tests, 50 assertions, 0 failures, 0 skipped
+
+

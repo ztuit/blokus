@@ -39,6 +39,27 @@ Shape.prototype = {
 		return new Shape(this.colour, newShapeMap, this.id, this.position);
 	},
 	/**
+	 * roatate the shape 180 defgrees
+	 * around the X axis
+	 **/
+	flipOverX:function(){
+		var newShapeMap = this.shapeMap.map(function(v){
+				return v.flipOverX();
+		});
+		
+		return new Shape(this.colour, newShapeMap, this.id, this.position);
+	},
+	/**
+	 * Rotate the shape 180 degrees around the
+	 * Y axis
+	 **/
+	flipAroundY:function(){
+		var newShapeMap = this.shapeMap.map(function(v){
+				return v.flipAroundY();
+		});
+		return new Shape(this.colour, newShapeMap, this.id, this.position);
+	},
+	/**
 	 * This is more than just intersects, it
 	 * also checks if the shape borders.
 	 **/

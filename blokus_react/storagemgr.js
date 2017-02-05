@@ -9,7 +9,7 @@ var Player = require('./blokus-model.js').Player;
 
 
 
-var projectId = process.env.blokus2-148816;
+var projectId = 'blokus2-147816';//process.env.blokus2-148816;
 
 var datastore = require('@google-cloud/datastore')({
   projectId: projectId,

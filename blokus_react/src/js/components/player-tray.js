@@ -57,8 +57,21 @@ var PlayerTray = React.createClass({
      * and replace.
      **/
     _rotateShapeRight : function(shape){
-
       var newShape = shape.rotateRight90().normalise();
+      var newShapes = this.state.shapes.replace(function(el){
+        return el.equals(shape);
+      }.bind(this), newShape);
+      this.setState({shapes:newShapes});
+    },
+    _flipX:function(shape){
+      var newShape = shape.flipOverX().normalise();
+      var newShapes = this.state.shapes.replace(function(el){
+        return el.equals(shape);
+      }.bind(this), newShape);
+      this.setState({shapes:newShapes});
+    },
+    _flipY:function(shape){
+      var newShape = shape.flipAroundY().normalise();
       var newShapes = this.state.shapes.replace(function(el){
         return el.equals(shape);
       }.bind(this), newShape);
@@ -78,7 +91,7 @@ var PlayerTray = React.createClass({
 
       this.state.shapes.forEach(function(el){
 
-        shapesEl.push(<ShapeView  rotateRight={this._rotateShapeRight} shapeSelected={this._selected} currentSelected={this.state.selected} shapeDragged={this.props.shapeDragged} shapeDragEnd={this.shapeDropped} shapeId={cnter} key={cnter} shape={el}/>);
+        shapesEl.push(<ShapeView  rotateRight={this._rotateShapeRight} flipX={this._flipX} flipY={this._flipY} shapeSelected={this._selected} currentSelected={this.state.selected} shapeDragged={this.props.shapeDragged} shapeDragEnd={this.shapeDropped} shapeId={cnter} key={cnter} shape={el}/>);
         cnter+=1;
       }.bind(this));
       var key = "tray_" + this.props.playerData.colour;
@@ -86,6 +99,7 @@ var PlayerTray = React.createClass({
       <div  tabindex="0" className={cellClassNames}  >
         {this.props.playerData.colour} has pieces to play:
         <div>
+
           {shapesEl}
         </div>
         <button value="" onClick={this._createClickHandler()}>End Turn</button>

@@ -33,6 +33,18 @@ describe("Shape Tests", function() {
 
   });
 
+  it("Shape FLIPS ok OVER X", function() {
+    var shapeMap = (new ConsList.list(new Coordinate(0,0))).Cons(new Coordinate(0,1))
+                  .Cons(new Coordinate(0,2)).Cons(new Coordinate(1,2));
+
+                var shape = new Shape(new Coordinate(0,0), shapeMap, 0);
+                  console.log("\n FLIP TEST 1\n" + shape.toString());
+                shape = shape.flipOverX();
+                console.log("\n FLIP TEST 2\n" + shape.toString());
+                //expect(shape.toString()).toBe("X\nXX\nX\n");
+
+  });
+
   it("Shape normalised ok", function() {
     var shapeMap = (new ConsList.list(new Coordinate(0,0))).Cons(new Coordinate(1,0))
                   .Cons(new Coordinate(2,0));
