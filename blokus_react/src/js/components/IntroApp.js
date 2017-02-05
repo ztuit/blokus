@@ -28,10 +28,10 @@ var IntroApp = React.createClass({
       return (
       <div>
         <div>
-          <button onClick={this._createNewGame}>Create New Game</button>
+          <button className="btn btn-primary" onClick={this._createNewGame}>Create New Game</button>
           <br/>
           <br/>
-          <button onClick={this._joinGame}>Join a game</button><input placeholder="gameid" type="text" onChange={this.updateInputValue}/>
+          <button className="btn btn-primary" onClick={this._joinGame}>Join a game</button><input className="form-control" placeholder="gameid" type="text" onChange={this.updateInputValue}/>
         </div>
       </div>
       );

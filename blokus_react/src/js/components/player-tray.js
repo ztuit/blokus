@@ -96,13 +96,14 @@ var PlayerTray = React.createClass({
       }.bind(this));
       var key = "tray_" + this.props.playerData.colour;
       return (
-      <div  tabindex="0" className={cellClassNames}  >
-        {this.props.playerData.colour} has pieces to play:
-        <div>
-
-          {shapesEl}
-        </div>
-        <button value="" onClick={this._createClickHandler()}>End Turn</button>
+        <div className={cellClassNames}>
+          <span  tabindex="0" className="label label-info"  >
+            {this.props.playerData.colour} has pieces to play:
+          </span>
+          <div>
+            {shapesEl}
+          </div>
+          <input type="button" value="End Turn" className="btn btn-info" onClick={this._createClickHandler()}/>
        </div>
       );
     }
