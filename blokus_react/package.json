@@ -36,7 +36,8 @@
     "build:html": "cp ./src/view/index.html ./dist/view/main.html",
     "build:dist": "rm -Rf ./dist && mkdir -p ./dist/js && mkdir -p ./dist/view && npm run build:js && npm run build:html &&  npm run build:css",
     "build:css": "cp -R ./assets ./dist/assets",
-    "build:deps": "cd ../blokus_core && npm install && npm run build:dist && cd ../blokus_model && npm install && npm run build:dist && cd ../blokus_react"
+    "build:deps": "cd ../blokus_core && npm install && npm run build:dist && cd ../blokus_model && npm install && npm run build:dist && cd ../blokus_react",
+    "build:all": "npm run build:deps && npm run build:dist"
   },
   "author": "Stu",
   "license": "ISC"

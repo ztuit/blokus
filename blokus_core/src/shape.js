@@ -12,6 +12,8 @@ var Shape = function(colour, shapeMap, id, position){
 	this.getCoordinates().forEach(function(el){
 		this.width=Math.max(Math.abs(el.x)+1,this.width);
 		this.height=Math.max(Math.abs(el.y)+1, this.height);
+		this.width = Math.max(this.width, this.height);
+		this.height = this.width;
 	}.bind(this));
 };
 
@@ -46,7 +48,7 @@ Shape.prototype = {
 		var newShapeMap = this.shapeMap.map(function(v){
 				return v.flipOverX();
 		});
-		
+
 		return new Shape(this.colour, newShapeMap, this.id, this.position);
 	},
 	/**

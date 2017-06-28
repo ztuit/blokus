@@ -61,11 +61,13 @@ var ShapeView = React.createClass({
       var compClassNames = cx("placeable", {"selectedShape":this.props.currentSelected===this.props.shapeId});
       var divStyle = {width: (this.props.shape.width*32)+5, margin:'3px'};
       return (
-          <div onKeyPress={this._keyPress}  tabindex="0" style={divStyle} draggable="true"  onDragStart={this._dragStarted} onDragEnd={this._dragEnd} className={compClassNames}>
-            <input type="button" value="x" className="btn btn-info btn-xs" onClick={this._flipX}/>
-            <input type="button" value="y" className="btn btn-info btn-xs" onClick={this._flipY}/>
-            <input type="button" value="z" className="btn btn-info btn-xs" onClick={this._rotate}/>
-              {rows}
+          <div style={divStyle}>
+            <div onKeyPress={this._keyPress}  tabindex="0" style={divStyle} draggable="true"  onDragStart={this._dragStarted} onDragEnd={this._dragEnd} className={compClassNames}>
+              <input type="button" value="x" className="btn btn-info btn-xs" onClick={this._flipX}/>
+              <input type="button" value="y" className="btn btn-info btn-xs" onClick={this._flipY}/>
+              <input type="button" value="z" className="btn btn-info btn-xs" onClick={this._rotate}/>
+                {rows}
+            </div>
           </div>
       );
     }

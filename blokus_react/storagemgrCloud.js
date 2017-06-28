@@ -14,9 +14,9 @@ var projectId = 'blokus2-147816';//process.env.blokus2-148816;
 var datastore = require('@google-cloud/datastore')({
   projectId: projectId,
   // The path to your key file:
-  keyFilename: './blokus2-435b3ab7ada1.json',
+  keyFilename: '',
   // Or the contents of the key file:
-  credentials: require('./blokus2-435b3ab7ada1.json')
+  credentials: require('')
 });
 
 
@@ -26,7 +26,7 @@ class StorageMgr{
    * Cloud implementations
    **/
 
-   static readGameFromCloud(id){
+   static readGame(id){
     var promise = new Promise(function(resolve, reject){
         var key = datastore.key(['Game', id]);
          datastore.get(key)
@@ -41,7 +41,7 @@ class StorageMgr{
        return promise;
    }
 
-   static writeGameToCloud(g){
+   static writeGame(g){
      var promise = new Promise(function(resolve, reject){
        var key = datastore.key(['Game', g.id]);
        datastore.save({
@@ -59,7 +59,7 @@ class StorageMgr{
    }
 
 
-   static readPlayerFromCloud(id){
+   static readPlayer(id){
      var key = datastore.key(['Player', id]);
      var p = new Promise(function(resolve, reject) {
        datastore.get(key)
@@ -73,7 +73,7 @@ class StorageMgr{
      return p;
    }
 
-   static createPlayerInCloud(playerId, gameId, c){
+   static createPlayer(playerId, gameId, c){
      var promise = new Promise(function(resolve, reject){
 
          var key = datastore.key(['Player', playerId]);
@@ -93,38 +93,7 @@ class StorageMgr{
       return promise;
    }
 
-  /**
-   * File implementations
-   **/
-  static readGameFromFile(id){
-    var gmpth = path.join(__dirname + '/data/game/' + id);
-    var gamefd = fs.openSync(gmpth, 'r+');
-    var rVal = JSON.parse(fs.readFileSync(gmpth));
-    fs.closeSync(gamefd);
-    return new GameModel(rVal);
-  }
 
-  static writeGameToFile(g){
-    var gmpth = path.join(__dirname + '/data/game/' + g.id);
-    var gamefd = fs.openSync(gmpth, 'r+');
-    fs.writeFile(gmpth, JSON.stringify(g.internal));
-    fs.closeSync(gamefd);
-  }
-
-  static readPlayerFromFile(id){
-    var plyrpth = path.join(__dirname + '/data/player/' + id);
-    var plyrfd = fs.openSync(plyrpth, 'r+');
-    return JSON.parse(fs.readFileSync(plyrpth));
-  }
-
-  static createPlayerInFile(playerId, gameId, c){
-    var plpth = path.join(__dirname + '/data/player/' + playerId);
-    var playerfd = fs.openSync(plpth, 'w');
-    var playerGame = {id:playerId, colour:c, gameId:gameId}
-    fs.writeFile(plpth, JSON.stringify(playerGame));
-    fs.closeSync(playerfd);
-    return new Player(c);
-  }
 
 }
 

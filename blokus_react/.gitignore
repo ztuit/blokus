@@ -1,5 +1,7 @@
 node_modules/*
 dist/*
 out.js
+blokus.js
+main.js
 !/.DS_Store
 data/*
