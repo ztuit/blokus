@@ -15,6 +15,9 @@ Project uses pure javascript and react with npm as the build tool.
 To build and run:
 
 `git clone https://github.com/ztuit/blokus.git`
+
 `cd blokus/blokus_react`
+
 `npm run build:all`
+
 `npm start`
